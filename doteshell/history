@@ -1,0 +1,30 @@
+sudo find-file /etc/NetworkManager/system-connections/PIATX.nmconnection 
+find-file sudo::/etc/NetworkManager/system-connections/PIATX.nmconnection 
+find-file //sudo::/etc/NetworkManager/system-connections/PIATX.nmconnection 
+find-file "//sudo::/etc/NetworkManager/system-connections/PIATX.nmconnection"
+listify "milind KAmbl"
+listify milind KAmbl
+find-file /sudo::/NetworkManager/system-connections/PIATX.nmconnection 
+find-file /sudo::/etc/NetworkManager/system-connections/PIATX.nmconnection 
+sudo cp ~/opensource/all-the-icons.el/fonts/*.ttf /usr/share/fonts/truetype/
+exit
+alias llt 'ls -ltrh $*'
+find-file eshell-rc-script
+find-file (eshell-rc-script)
+find-file $(eshell-rc-script)
+find-file $eshell-rc-script
+. $eshell-aliases-file
+ff ~/docs/notes_tobe_integrated_into_main.org
+alias ff "find-file $*"
+ff ~/docs/notes_tobe_integrated_into_main.org
+find-file ~/docs/notes_tobe_integrated_into_main.org 
+ff .
+alias ff 'find-file $1'
+ff .
+file 0
+ff 0
+ff "0"
+ff .
+vutx
+grep from var/eshell/*
+exit

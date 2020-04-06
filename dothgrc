@@ -1,0 +1,65 @@
+[ui]
+username = Milind Kamble <milindkamble@yahoo.com>
+verbose = False
+merge = emacsclient
+style = compact
+
+[extensions]
+graphlog =
+rebase =
+color=
+mq=
+
+# following customization obtained from: http://jordi.inversethought.com/blog/customising-mercurial-like-a-pro/
+[revsetalias]
+wip = (parents(not public()) or not public() or . or head()) and not closed()
+
+[templates]
+#wip = '{label("log.branch", ifeq(branch, "default", "", branch))} {label("changeset.{phase}", rev)} {label("grep.user", author|user)}{label("log.tag", if(tags," {tags}"))} {bookmarks % "{ifeq(bookmark, currentbookmark, label("log.activebookmark", bookmark), label("log.bookmark", bookmark))} "}\n{label(ifcontains(rev, revset("parents()"), "desc.here"),desc|firstline)}'
+#mbklogtpl = '{label("log.activebookmark", (node|short))} {rev} {label("changeset.public", branch)} {desc|firstline}\n'
+ldate = '{label("log.date",
+                "{date|isodate}")}'
+
+ldesc = '{label('ui.note log.description',
+                      '{desc|strip}')}'
+ldescfirst = '{label('ui.note log.description',
+                     '{desc|firstline|strip}')}'
+
+changeset = '{branch} {lrev}{tags}{bookmarks}{parents}   {lnode}   {ldate}   {luser}\n  {ldescfirst}\n\n'
+changeset_quiet = '{branch} {lrev}:{lnode}\n'
+changeset_verbose = '{lrev}{tags}{parents}   {lnode}   {ldate}   {lauthor}\n  {ldesc}\n\n'
+lrev = '{label("log.changeset changeset.{phase}",
+              "{rev}")}'
+lnode = '{label("log.node",
+                "{node|short}")}'
+lauthor = '{label("log.user",
+                  "{author}")}'
+luser = '{label("log.user",
+                "{author|user}")}'
+start_tags = '['
+tag = '{label("log.tag",
+              "{tag},")}'
+last_tag = '{tag}]'
+start_parents = ':'
+parent = '{lrev},'
+last_parent = '{lrev}'
+start_bookmarks = '['
+bookmark = '{label("log.bookmark",
+                   "{bookmark},")}'
+last_bookmark = '{bookmark}]'
+
+[color]
+mode=terminfo
+
+[alias]
+wip = log --graph --rev=wip --template=wip
+glog = log --graph
+mine = resolve -t internal:local
+theirs = resolve -t internal:other
+abortmerge = update -C .
+
+[merge-tools]
+#vimdiff.executable = vimdiff
+#vimdiff.args = -f -d $output -M $local $base $other -c "wincmd J" -c "set modifiable" -c "set write"
+#vimdiff.premerge = keep
+emacsclient.args = -q --eval "(ediff-merge-with-ancestor \""$local"\" \""$other"\" \""$base"\" nil \""$output"\")"

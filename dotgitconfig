@@ -1,0 +1,21 @@
+[user]
+	email = milindbkamble@gmail.com
+	name = Milind Kamble
+[pull]
+	rebase = true
+[gui]
+	editor = emacsclient
+[alias]
+	co = checkout
+	ci = commit
+	st = status
+	br = branch
+	hist = log --pretty=format:'%h %ad | %s%d [%an]' --graph --date=short
+	type = cat-file -t
+	dump = cat-file -p
+	sh = show
+[core]
+	filemode = false
+	autocrlf = input
+[push]
+	default = current

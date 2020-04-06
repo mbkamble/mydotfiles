@@ -1,0 +1,43 @@
+#  -*- mode: lisp -*-
+#
+#  from github:howardabrams:dot-files:emacs-eshell.org
+#  gst command is just an alias to magit-status, but using the alias
+#  doesn’t pull in the current working directory, so make it a
+#  function
+(defun eshell/gst (&rest args)
+    (magit-status (pop args) nil)
+    (eshell/echo))   # The echo command suppresses output
+
+(defun eshell-command-result-filter (command rex)
+       "return list of REX matching lines from output of COMMAND"
+       (seq-filter
+        (lambda (x) (s-matches? rex x))
+          (s-lines (eshell-command-result command))))
+
+;; This attempt of creating an eshell 'batt' command used the
+;; traditional shell method of greping a command output. First running
+;; 'upower -e' to get device enumeration and then running 'upower -i'
+;; on the battery device.
+;; Since grepping for command output is such a common need, the
+;; function 'eshell-command-result-filter' combines the two operations
+(defun eshell/batt-try1 ()
+  (let* ((dev (car
+               (eshell-command-result-filter "upower -e" "battery")))
+         (batt-info (eshell-command-result-filter
+                     (s-concat "upower -i " dev)
+                     "state\\|percent\\|time")))
+    (eshell-printn (s-join "\n" batt-info))))
+
+;; Here we use the 'batt' package and use some internal functions to
+;; generate the results. The code runs faster too.
+;; mechanics: battery-status-function is a variable to store one of a
+;; variety of functions to get battery status.
+;; On Solus platform, this is bound to battery-linux-sysfs, which in
+;; turn get the data from /sys/class/power_supply/BAT* and formats it
+;; into an alist of char-based keys. BATTERY-FORMAT is a convenient
+;; function to access the key values using the format. See
+;; battery-linux-sysfs for the format specifiers
+(defun eshell/batt ()
+  (require 'battery)
+  (battery-format "Load:%p%%   Status:%B  Time Remaining:%t"
+                  (funcall battery-status-function)))
