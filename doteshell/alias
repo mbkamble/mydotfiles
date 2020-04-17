@@ -1,7 +1,8 @@
-alias ff find-file $1
-alias vuph nmcli con down id gargoylearea55phoot
-alias vdtx nmcli con down id PIATX
-alias vutx nmcli con up id PIATX
-alias vuk3 nmcli con up id kamble3
-alias vdk3 nmcli con down id kamble3
 alias llt ls -ltrh
+alias ns nmcli con show --active
+alias vdk3 nmcli con down id kamble3
+alias vuk3 nmcli con up id kamble3
+alias vutx nmcli con up id PIATX
+alias vdtx nmcli con down id PIATX
+alias vuph nmcli con down id gargoylearea55phoot
+alias ff find-file

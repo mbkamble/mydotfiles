@@ -14,30 +14,48 @@
         (lambda (x) (s-matches? rex x))
           (s-lines (eshell-command-result command))))
 
-;; This attempt of creating an eshell 'batt' command used the
-;; traditional shell method of greping a command output. First running
-;; 'upower -e' to get device enumeration and then running 'upower -i'
-;; on the battery device.
-;; Since grepping for command output is such a common need, the
-;; function 'eshell-command-result-filter' combines the two operations
-(defun eshell/batt-try1 ()
-  (let* ((dev (car
-               (eshell-command-result-filter "upower -e" "battery")))
-         (batt-info (eshell-command-result-filter
-                     (s-concat "upower -i " dev)
-                     "state\\|percent\\|time")))
-    (eshell-printn (s-join "\n" batt-info))))
-
-;; Here we use the 'batt' package and use some internal functions to
-;; generate the results. The code runs faster too.
-;; mechanics: battery-status-function is a variable to store one of a
-;; variety of functions to get battery status.
-;; On Solus platform, this is bound to battery-linux-sysfs, which in
-;; turn get the data from /sys/class/power_supply/BAT* and formats it
-;; into an alist of char-based keys. BATTERY-FORMAT is a convenient
-;; function to access the key values using the format. See
-;; battery-linux-sysfs for the format specifiers
+# 'eshell' way of thinking rather than traditional piping several
+# commands in a traditional shell.
+# Here we use the 'batt' package and use some internal functions to
+# generate the results. The code runs faster too.
+# mechanics: battery-status-function is a variable to store one of a
+# variety of functions to get battery status.
+# On Solus platform, this is bound to battery-linux-sysfs, which in
+# turn get the data from /sys/class/power_supply/BAT* and formats it
+# into an alist of char-based keys. BATTERY-FORMAT is a convenient
+# function to access the key values using the format. See
+# battery-linux-sysfs for the format specifiers
 (defun eshell/batt ()
   (require 'battery)
   (battery-format "Load:%p%%   Status:%B  Time Remaining:%t"
                   (funcall battery-status-function)))
+
+# An eshell command to unlock the KeepassXC GUI-app
+# remotely without explicitly entering the password
+# Lot of learning and experimenting during development, but the
+# shortness of code is impressive.
+# Reading the safebox.gpg file auto decrypts it into plain text
+# (thanks to EPA). parson-parse converts json-structured
+# string into hierarchical alist, from which we extract the values of
+# password and security file. Finally the dbus API is used to execute
+# the method openDatabase on the keepass service
+(defun eshell/unlock-keepass ()
+  (require 'parson)
+  (require 'dbus)
+  (let* ((strong-box (expand-file-name
+                      "~/.gnupg/keepass/keepass_safebox.gpg"))
+         (kdbx (expand-file-name
+                "~/.gnupg/keepass/khaazgee_milind_keepass.kdbx"))
+         (pwd-db (parson-parse (get-string-from-file
+                                strong-box)))
+         (kdbx-sec (alist-get "keepasssec" (alist-get "mil" pwd-db nil nil
+                                                     'string=)
+                              nil nil 'string=))
+         (pwd (alist-get "keepasspwd" (alist-get "mil" pwd-db nil nil
+                                                 'string=)
+                         nil nil 'string=)))
+    (dbus-call-method :session "org.keepassxc.KeePassXC.MainWindow"
+                      "/keepassxc" "org.keepassxc.MainWindow" "openDatabase"
+                      kdbx pwd kdbx-sec
+                      )
+    ))

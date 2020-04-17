@@ -2,6 +2,7 @@ if status --is-interactive
     # based on example code in documentation/commands.html
     set -g fish_user_abbreviations
     # abbr -a lsfl
+    abbr -a gop 'gio open'
     abbr -a area52nasdoc 'sudo mount -t cifs //192.168.7.10/Documents -o vers=3.0,username=mbkamble,domain=WORKGROUP,uid=1000,gid=1000 ~/area52nas_shares/Documents'
     abbr -a aaaa "kbsetup built"
     abbr -a adad "kbsetup rk61"
