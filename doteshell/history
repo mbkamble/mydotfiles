@@ -1,128 +1,128 @@
-ls /sys/class/power_supply/BAT0/power/
+unlock-keepass 
+unlock-keepass 
+unlock-keepass 
+unlock-keepass 
+ping cnn.com
+ping cnn.com
+ping cnn.com
+ip a
+ping cnn.com
+ping cnn.com
+ns
+sudo usermod -a -G systemd-journal mbkamble
+exit
+unlock-keepass 
+which bean-extract
+cd docs/account_books/
+echo $BCT19
+echo $BCTCFG 
+bean-extract -f 2019.beancount.asc beancount.import.config ~/ofxdownloads/citi_costco.ofx  > ~/tmp/new_imports.bct
+unlock-keepass 
+unlock-keepass 
 batt
 batt
 batt
+echo ⚡
 batt
-ls ~/Music/
-cp /run/media/mbkamble/STOR64GB/torrents/*m4a ~/Music/
-rm /run/media/mbkamble/STOR64GB/torrents/map-cmdline.mbkcompact 
-batt
-batt
+ip a
+unlock-keepass 
+unlock-keepass 
+unlock-keepass 
+unlock-keepass 
 ns
 vutx
-batt
-batt
-(- 719.99 549.99)
-(/ 189.84 162.13)
-batt
-batt
+mcli device wifi list
+nmcli device wifi list
+nmcli device wifi MTKAP2
+nmcli device wifi bssid MTKAP2
+nmcli device wifi list bssid MTKAP2
+nmcli device wifi list ssid MTKAP2
+nmcli device wifi list bssid 00:0C:43:26:60:00
+nmcli device wifi list bssid 00:0C:43:26:60:00
 ns
-echo $eshell-aliases-file
-source $eshell-aliases-file
+ip a
 ns
-batt
-(* 67 1.0825)
-batt
+unlock-keepass 
+unlock-keepass 
+unlock-keepass 
+unlock-keepass 
+ns
+echo $$
+nmcli device wifi list bssid 00:0C:43:26:60:00
+llt tmp/*bct
+llt tmp/*.bct
+ls tmp/*bct
+exit
+cd
+llt tmp/*bct
+cd docs/account_books/
+unlock-keepass 
+unlock-keepass 
+unlock-keepass 
+unlock-keepass 
+tar tvzf ~/downloads/OpenTaxSolver2019_17.07_linux64.tgz 
+bean-extract -f 2019.beancount.asc beancount.import.config ~/ofxdownloads/  > ~/tmp/new_imports.bct
+z Bills
+cd ~/emacs-profiles/mbkamble/
+rg tramp-eshell-direc 
+du -sh .
+du -sh .git
+grep -r 'tramp-eshell-direc' .
+eshell-mode-hook
+echo $eshell-mode-hook
+(require 'eshell-z)
+z -h
+z -l
+z -t
+z -t
+z -t home
 cd ~/tmp
-ls 
-ls *tex
-eshell-display-modifier-help
-eshell-display-modifier-help
-ls *tex(:s/tikz/foo/)
-ls *tex(:s/test_tikz_/foo/)
+z profi
+ip a
+unlock-keepass 
+ns
 exit
-exit
-cd ~/programming/
-cd ../tmp
-ls *.tex
-echo *.tex(:gs/test_tikz_/mbk/)
-echo *.tex(:gs/test_tikz_/.//)
-echo *.tex(:gs/test_tikz_/.//)
-echo *.tex(:gs/test_tikz_/.\//)
-echo *.tex(:gs/test_tikz_/.\\//)
-echo *.tex(:gs/test_tikz_/.//)
-echo *.tex(:gs/test_tikz_///)
-echo *.tex(:gs/t/--/)
+cd
+vumtk
+ns
+journalctl -xe NM_CONNECTION=4fa7c981-7048-4062-95e3-4fe451c19c69 + NM_DEVICE=wlp2s0|cat
+pgrep dhcclient
+systemctl list-unit-files --state=enabled --no-pager
+wifi-menu
+ls /etc/NetworkManager/conf.d/
+ls -a /etc/NetworkManager/conf.d/
+eopkg -F info NetworkManager
+eopkg -F info networkmanager
+eopkg sf /etc/NetworkManager/conf.d
+eopkg -F info networkmanager
+eopkg -F info networ-kmanager
+eopkg -F info network-manager
+ls /usr/lib/NetworkManager/conf.d/
+grep -i dhc /usr/lib/NetworkManager/conf.d/*
+eopkg -F info dhclient
+pgrep dhclient
+cat /proc/50859/cmdline |tr '\0' '\n'
+ls -l /var/lib/NetworkManager/dhclient-wlp2s0.conf
+sudo ls -l /var/lib/NetworkManager/dhclient-wlp2s0.conf
+sudo cat /var/lib/NetworkManager/dhclient-wlp2s0.conf
+unlock-keepass 
 batt
-echo *.tex(:gs/t/--/))
-echo *.tex(:gs/t/--/)
-echo *.tex(:gs/t/--/)
-echo *.tex(:gs/tikz_euclide/a/)
-echo *.tex(:gs/tikz_euclide/nil/)
-echo *.tex(:gs/tikz_euclide/ /)
-echo *.tex(:gs/tikz_euclide/ /)
-echo *.tex(:gs/tikz_euclide/z/)
-echo *.tex(:gs/tikz_euclide/z/)
-echo *.tex(:gs/tikz_euclide/z/)
-echo *.tex(:gs/tikz_euclide/z/)
-echo *.tex(:gs/tikz_euclide/z/)
-echo *.tex(:gs:tikz_euclide:z:)
-echo *.tex(:gs-tikz_euclide-z-)
-echo *.tex(:gs-tikz_euclide-z--)
-echo *.tex(:gs/tikz_euclide/z///)
-echo *.tex(:gs/tikz_euclide/z///)
-echo *.tex(:gs/tikz_euclide/z/)
-echo *.tex(:gs/tikz_euclide/z//)
-echo *.tex(:gs/tikz_euclide/z-/)
-echo *.tex(:gs/tikz_euclide/z//)
-echo *.tex(:gs@tikz_euclide@z@)
-echo *.tex(:gs@tikz_euclide@z@)
-echo *.tex(:gs@tikz_euclide@@)
-echo *.tex
-echo *.tex(:gs/tikz_euclide_//)
-echo *.tex(:gs/test_tikz_//)
-batt
-batt
-vutx
-echo *.tex(:gs/test_tikz_//)
--zip-pair *.tex *.tx(:gs/test_tikz_//)
--zip-pair *.tex *.tex(:gs/test_tikz_//)
-for i in {-zip-pair *.tex *.tex(:gs/test_tikz_//)} {echo (car i) (cdr i) }
-for i in {-zip-pair *.tex *.tex(:gs/test_tikz_//)} {print (car i) (cdr i) }
-for i in {-zip-pair *.tex *.tex(:gs/test_tikz_//)} {echo milind (car i) (cdr i) }
-ls foo*
-ls *foo*
-touch foo.txt 
-mv foo.txt foot.txt
-rm foot.txt 
-for i in {-zip-pair *.tex *.tex(:gs/test_tikz_//)} {mv (car i) (cdr i) }
-ls *.tex
-mkdir -p ~/programming/latex/tikz
-mv *tex  ~/programming/latex/tikz
-(type-of eshell-history-ring)
-(car eshell-history-ring)
-(cadr eshell-history-ring)
-(type-of cddr eshell-history-ring)
-(type-of (cddr eshell-history-ring))
-(setq foo (cddr eshell-history-ring))
-(type-of foo)
-(length foo)
-(type-of foo[0])
-ls *.txt ; this is a comment
-ls *.aux # this is a comment2
-(setq hist1 (cddr eshell-history-ring))
-ls   *.aux     # this is a comment2
-(setq hist2 (cddr eshell-history-ring))
-unlock-keepass 
-unlock-keepass 
-mv /tmp/ielm_history.txt ~/tmp/ielm_history_1.txt
-exit
-cd ~
-unlock-keepass 
-unlock-keepass 
-unlock-keepass 
-unlock-keepass 
-unlock-keepass 
-unlock-keepass 
-unlock-keepass 
-unlock-keepass 
+frame-width
+cd emacs-profiles/mbkamble/
+rg auto-fill .
+grep fill *.el lisp/*.el
 unlock-keepass 
 unlock-keepass 
 batt
-date
+unlock-keepass 
+unlock-keepass 
 batt
 unlock-keepass 
-exit
 unlock-keepass 
 unlock-keepass 
 unlock-keepass 
+unlock-keepass 
+unlock-keepass 
+unlock-keepass 
+unlock-keepass 
+ff emacs-profiles/mbkamble/milindkamble.el 

@@ -34,6 +34,7 @@ if status --is-interactive
     abbr -a vdph "nmcli con down id gargoylearea55phoot"
     abbr -a vdsr "nmcli con down id SARC"
     abbr -a vdtx "nmcli con down id PIATX"
+    abbr -a vdmtk "nmcli con down id MTKAP2"
     abbr -a vuah "nmcli con up id AstuteHook-2G"
     abbr -a vuah5 "nmcli con up id AstuteHook-5G"
     abbr -a vubm "nmcli con up id blurrymedian_5G"
@@ -44,6 +45,15 @@ if status --is-interactive
     abbr -a vuph "nmcli con up id gargoylearea55phoot"
     abbr -a vusr "nmcli con up id SARC"
     abbr -a vutx "nmcli con up id PIATX"
+    abbr -a vumtk "nmcli con up id MTKAP2"
+    abbr -a picoR64 "picocom -b 115200"
+    abbr -a dugui "baobab"
+    abbr -a whowns "eopkg sf"
+    abbr -a bill16 "~/docs/Bills_Reciepts_Rebates/2016/"
+    abbr -a bill17 "~/docs/Bills_Reciepts_Rebates/2017/"
+    abbr -a bill18 "~/docs/Bills_Reciepts_Rebates/2018/"
+    abbr -a bill19 "~/docs/Bills_Reciepts_Rebates/2019/"
+    abbr -a bill20 "~/docs/Bills_Reciepts_Rebates/2020/"
     for i in (seq 1 30) ; abbr -a c$i "echo $i | cdh"; end
 
 end
