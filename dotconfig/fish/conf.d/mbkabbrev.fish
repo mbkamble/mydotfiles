@@ -5,6 +5,7 @@ if status --is-interactive
     abbr -a gop 'gio open'
     abbr -a area52nasdoc 'sudo mount -t cifs //192.168.7.10/Documents -o vers=3.0,username=mbkamble,domain=WORKGROUP,uid=1000,gid=1000 ~/area52nas_shares/Documents'
     abbr -a aaaa "kbsetup built"
+    abbr -a dybo "kbsetup sofle"
     abbr -a adad "kbsetup rk61"
     abbr -a agag "kbsetup Inatek"
     abbr -a ahah "kbsetup sculpt"

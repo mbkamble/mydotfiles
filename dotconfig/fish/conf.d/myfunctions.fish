@@ -66,3 +66,32 @@ function unmountflash
         printf "%s\n" "No drive matched for argument: $argv[1]"
     end
 end
+
+function kbsetup
+    # identify the keyboard id using xinput list; then reset the keyboard layout and finally set to desired layout with relevant options
+    # the first setxkbmap -option "" resets the keyboard
+    switch $argv[1]
+        case sofle
+            set dev_id (xinput list | perl -F'/^.+id=|\s+/' -ne 'print $F[1] if /Sofle\s+id.+keyboard/') ; and [ -n "$dev_id" ];
+            and setxkbmap -device $dev_id -layout us -option ""
+        case rk61
+            set dev_id (xinput list | perl -F'/^.+id=|\s+/' -ne 'print $F[1] if /RK/') ; and [ -n "$dev_id" ];
+            and setxkbmap -device $dev_id -layout us -option ""; and setxkbmap -device $dev_id -layout us -variant dvorak -option 'ctrl:nocaps'; and xmodmap ~/xmodmap.rk61
+        case 'k7*'
+            set dev_id (xinput list | perl -F'/^.+id=|\s+/' -ne 'print $F[1] if /Logitech K7/') ; and [ -n "dev_id" ];
+            and setxkbmap -device $dev_id -layout us -option ""; and setxkbmap -device $dev_id -layout us -variant dvorak -option 'ctrl:nocaps,altwin:swap_lalt_lwin'
+        case 'Ina*'
+            set dev_id (xinput list | perl -F'/^.+id=|\s+/' -ne 'print $F[1] if /Inateck/') ; and [ -n "dev_id" ];
+            and setxkbmap -device $dev_id -layout us -option ""; and setxkbmap -device $dev_id -layout us -variant dvorak -option 'ctrl:nocaps,altwin:swap_lalt_lwin'
+        case 'scu*'
+            set dev_id (xinput list | perl -F'/^.+id=|\s+/' -ne 'print "$F[1]\n" if /Micro.+keybo/' | head -1) ; and [ -n "dev_id" ];
+            and setxkbmap -device $dev_id -layout us -option ""; and setxkbmap -device $dev_id -layout us -variant dvorak -option 'ctrl:nocaps'
+        case builtin 'b*'
+            set dev_id (xinput list | perl -F'/^.+id=|\s+/' -ne 'print $F[1] if /AT Translated/') ; and [ -n "dev_id" ] ;
+            and setxkbmap -device $dev_id -layout us -option ""; and setxkbmap -device $dev_id -layout us -variant dvorak -option 'ctrl:nocaps,altwin'
+        case resetbuiltin
+            set dev_id (xinput list | perl -F'/^.+id=|\s+/' -ne 'print $F[1] if /AT Translated/') ; and [ -n "dev_id" ] ;
+            and setxkbmap -device $dev_id -layout us -option ""
+    end
+    set -e dev_id
+end
