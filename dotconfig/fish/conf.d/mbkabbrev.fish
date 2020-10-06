@@ -2,6 +2,10 @@ if status --is-interactive
     # based on example code in documentation/commands.html
     set -g fish_user_abbreviations
     # abbr -a lsfl
+    abbr -a sfldvl 'gio open ~/Pictures/sofle_dvorak_layer.png'
+    abbr -a sfllrl 'gio open ~/Pictures/sofle_lower_layer.png'
+    abbr -a sflrsl 'gio open ~/Pictures/sofle_raise_layer.png'
+    abbr -a sflmml 'gio open ~/Pictures/sofle_mmedia_layer.png'
     abbr -a gop 'gio open'
     abbr -a area52nasdoc 'sudo mount -t cifs //192.168.7.10/Documents -o vers=3.0,username=mbkamble,domain=WORKGROUP,uid=1000,gid=1000 ~/area52nas_shares/Documents'
     abbr -a aaaa "kbsetup built"
@@ -56,5 +60,20 @@ if status --is-interactive
     abbr -a bill19 "~/docs/Bills_Reciepts_Rebates/2019/"
     abbr -a bill20 "~/docs/Bills_Reciepts_Rebates/2020/"
     for i in (seq 1 30) ; abbr -a c$i "echo $i | cdh"; end
-
+    abbr -a kccomm "echo Comma is on Dvrk-bottomrow-ring"
+    abbr -a kcqot "echo Quote is on Dvrk-bottomrow-pinky"
+    abbr -a kcdot "echo Comma is on Dvrk-bottomrow-middle"
+    abbr -a kcplus "echo Plus is on Lower-homerow-I"
+    abbr -a kcmins "echo Minus is on Lower-homerow-d"
+    abbr -a kcund "echo Underscore is on Lower-homerow-D or Lower-bottomrow-x"
+    abbr -a kccln "echo Colon is on Lower-bottomrow-dot or Lower-bottomrow-W"
+    abbr -a kcsemi "echo Semicolon is on Lower-bottomrow-w"
+    abbr -a kclbrc "echo Leftbrace is on Lower-homerow-n"
+    abbr -a kcrbrc "echo Rightbrace is on Lower-homerow-s"
+    abbr -a kclbrk "echo LeftBracket is on Lower-bottomrow-quote"
+    abbr -a kcrbrk "echo RightBracket is on Lower-bottomrow-comma"
+    abbr -a kcque "echo Question is on Lower-bottomrow-m or   Dvrk-bottomrow-rightextendedpinky-shift"
+    abbr -a kcsls "echo ForwardSlash is on Dvrk-bottomrow-rightextendedpinky"
+    abbr -a kcbsl "echo Backslash is on Lower-bottomrow-v"
+    abbr -a kcpip "echo Pipe is on Lower-bottomrow-z or Lower-bottomrow-V"
 end
