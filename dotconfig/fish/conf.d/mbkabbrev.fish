@@ -8,13 +8,13 @@ if status --is-interactive
     abbr -a sflmml 'gio open ~/Pictures/sofle_mmedia_layer.png'
     abbr -a gop 'gio open'
     abbr -a area52nasdoc 'sudo mount -t cifs //192.168.7.10/Documents -o vers=3.0,username=mbkamble,domain=WORKGROUP,uid=1000,gid=1000 ~/area52nas_shares/Documents'
-    abbr -a aaaa "kbsetup built"
-    abbr -a dybo "kbsetup sofle"
+    abbr -a aaaa "setxkbmap -device (xinput list|sed -En '/AT Trans.+keyboard/ {s/.+id=([0-9]+)\s.+/\1/p}') -layout us -variant dvorak -option 'ctrl:nocaps'"
+    abbr -a bbbb "setxkbmap -device (xinput list|sed -En '/AT Trans.+keyboard/ {s/.+id=([0-9]+)\s.+/\1/p}') -layout us -option ''"
+    abbr -a dybo "setxkbmap -device (xinput list|sed -En '/Sofle.+keyboard/ {s/.+id=([0-9]+)\s.+/\1/p}') -layout us -option ''"
     abbr -a adad "kbsetup rk61"
     abbr -a agag "kbsetup Inatek"
     abbr -a ahah "kbsetup sculpt"
     abbr -a asas "kbsetup k7"
-    abbr -a bbbb "kbsetup resetbuiltin"
     abbr -a batt "upower -i (upower -e|grep battery) | grep -P 'percentage|time|state'"
     abbr -a cathtml "links -dump"
     abbr -a cs "xdg-open ^ /dev/null"

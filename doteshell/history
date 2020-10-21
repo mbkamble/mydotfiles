@@ -1,128 +1,128 @@
-unlock-keepass 
-unlock-keepass 
-unlock-keepass 
-unlock-keepass 
-ping cnn.com
-ping cnn.com
-ping cnn.com
-ip a
-ping cnn.com
-ping cnn.com
-ns
-sudo usermod -a -G systemd-journal mbkamble
+(type-of (eshell-command-result-filter "xinput list" "AT Trans.+keybo"))
+(llength (eshell-command-result-filter "xinput list" "AT Trans.+keybo"))
+(len (eshell-command-result-filter "xinput list" "AT Trans.+keybo"))
+(length (eshell-command-result-filter "xinput list" "AT Trans.+keybo"))
+(car (eshell-command-result-filter "xinput list" "AT Trans.+keybo"))
+(type-of (car (eshell-command-result-filter "xinput list" "AT Trans.+keybo")))
+(set foo (car (eshell-command-result-filter "xinput list" "AT Trans.+keybo")))
+(setq foo (car (eshell-command-result-filter "xinput list" "AT Trans.+keybo")))
+foo
+(type-of foo)
+echo $foo
+(s-slice-at "=" foo)
+(s-slice-at "\\= \\]" foo)
+(s-slice-at "\\[= \\]" foo)
+(s-slice-at "[= ]" foo)
+(s-slice-at "[=0-9]" foo)
+(s-slice-at "=[0-9]+" foo)
+(s-slice-at "=|[0-9]+" foo)
+(s-slice-at "=\\|[0-9]+" foo)
+(s-slice-at "id=" foo)
+(car (s-slice-at "id=" foo))
+(cadr (s-slice-at "id=" foo))
+(s-split "id=" foo)
+(s-split "id=\\| " foo)
+(s-split "id=| " foo)
+(s-split "id=\\| " foo)
+(s-split "id=\\| *" foo)
+(s-split "id=\\| +" foo)
+echo $foo
+(s-split "id=\\|\t+" foo)
+(s-split "id=\\|\sc+" foo)
+(s-split "id=\\|\\\sc+" foo)
+(s-split "id=\\|\\\s-+" foo)
+(s-split "id=\\|\s-+" foo)
+(s-split "id=\\|\s-" foo)
+(s-split "id=\\|\\\s-" foo)
+(s-split "id=\\|\s-" foo)
+(s-split "id=\\|\t" foo)
+xinput
+(s-split "id=\\|\t" foo)
+(caaadr (s-split "id=\\|\t" foo))
+(caaar (s-split "id=\\|\t" foo))
+(caddr (s-split "id=\\|\t" foo))
+(s-equals "abc" "abc")
+(s-equals? "abc" "abc")
+kbsetup
+kbsetup aaaa
+kbsetup aaaa
+kbsetup aaaa
+kbsetup aaaa
+kbsetup aaaa
+kbsetup dybo
+(if (s-equals? "aaa" "bbb") "milind" "kamble")
+(if (s-equals? "aaa" "bbb") "milind" "kamble" "hello")
+(if (s-equals? "aaa" "aaa") "milind" "kamble" "hello")
+(if (s-equals? "aaa" "bbb") "milind")
+(if (s-equals? "aaa" "bbb") "milind" nil)
+(type-of ((if (s-equals? "aaa" "bbb") "milind")))
+(if (s-equals? "aaa" "bbb") "milind")
+(type-of (if (s-equals? "aaa" "bbb") "milind"))
+echo $(if (s-equals? "aaa" "bbb") "milind")
+echo $(if (s-equals? "aaa" "bbb") "milind" nil)
+echo $(if (s-equals? "aaa" "bbb") "milind" t)
+(eshell-plain-command "ls" "-l")
+(eshell-plain-command "ls" ("-l"))
+(eshell-plain-command "ls" '("-l"))
+(eshell-plain-command "setxkmap" '("-device" "14" "-layout" "us" "-variant" "dvorak" "-option" "ctrl:nocaps"))
+(eshell-plain-command "setxkbmap" '("-device" "14" "-layout" "us" "-variant" "dvorak" "-option" "ctrl:nocaps"))
+(e-split "setxkbmap -device kbid -layout us -variant dvorak -option ctrl:nocaps")
+(s-split "setxkbmap -device kbid -layout us -variant dvorak -option ctrl:nocaps")
+(s-split-words "setxkbmap -device kbid -layout us -variant dvorak -option ctrl:nocaps")
+(s-split " "  "setxkbmap -device kbid -layout us -variant dvorak -option ctrl:nocaps")
+kbsetup aaaa
+(format "foo %d milind" 14)
+kbsetup aaaa
+kbsetup dybo
+kbsetup dybo
+(format "%s" nil)
+kbsetup dybo
+kbsetup aaaa
+xinput list
+kbsetup aaaa
+kbsetup aaaa
+kbsetup dybo
+kbsetup dybo
+kbsetup dybo
+kbsetup aaaa
+kbsetup aaaa
+kbsetup aaaa
+kbsetup aaaa
+kbsetup aaaa
+(format "-device %s -layout us -variant dvorak -option ctrl:nocaps" 14)
+kbsetup aaaa
+kbsetup dybo
+kbsetup aaaa
+kbsetup dybo
+kbsetup dybo
+kbsetup aaaa
+kbsetup aaaa
+kbsetup aaaa
+kbsetup aaaa
+kbsetup aaaa reset
+kbsetup aaaa
+makunbound kbsetup
+which kbsetup
+ediff-files ~/opensource/mydotfiles/doteshell/alias ~/emacs-profiles/mbkamble/etc/eshell/aliases
+. ~/opensource/mydotfiles/doteshell/alias
+. ~/opensource/mydotfiles/doteshell/alias
+dybo
+dybo
+dybo
+dybo
+. ~/opensource/mydotfiles/doteshell/alias
+dybo
 exit
-unlock-keepass 
-which bean-extract
-cd docs/account_books/
-echo $BCT19
-echo $BCTCFG 
-bean-extract -f 2019.beancount.asc beancount.import.config ~/ofxdownloads/citi_costco.ofx  > ~/tmp/new_imports.bct
-unlock-keepass 
-unlock-keepass 
-batt
-batt
-batt
-echo ⚡
-batt
-ip a
-unlock-keepass 
-unlock-keepass 
-unlock-keepass 
-unlock-keepass 
-ns
-vutx
-mcli device wifi list
-nmcli device wifi list
-nmcli device wifi MTKAP2
-nmcli device wifi bssid MTKAP2
-nmcli device wifi list bssid MTKAP2
-nmcli device wifi list ssid MTKAP2
-nmcli device wifi list bssid 00:0C:43:26:60:00
-nmcli device wifi list bssid 00:0C:43:26:60:00
-ns
-ip a
-ns
-unlock-keepass 
-unlock-keepass 
-unlock-keepass 
-unlock-keepass 
-ns
-echo $$
-nmcli device wifi list bssid 00:0C:43:26:60:00
-llt tmp/*bct
-llt tmp/*.bct
-ls tmp/*bct
+alias foo "find-file $*"
+alias foo 'find-file $*'
 exit
-cd
-llt tmp/*bct
-cd docs/account_books/
-unlock-keepass 
-unlock-keepass 
-unlock-keepass 
-unlock-keepass 
-tar tvzf ~/downloads/OpenTaxSolver2019_17.07_linux64.tgz 
-bean-extract -f 2019.beancount.asc beancount.import.config ~/ofxdownloads/  > ~/tmp/new_imports.bct
-z Bills
-cd ~/emacs-profiles/mbkamble/
-rg tramp-eshell-direc 
-du -sh .
-du -sh .git
-grep -r 'tramp-eshell-direc' .
-eshell-mode-hook
-echo $eshell-mode-hook
-(require 'eshell-z)
-z -h
-z -l
-z -t
-z -t
-z -t home
-cd ~/tmp
-z profi
-ip a
-unlock-keepass 
-ns
+llt pro*
+llt
+ff history
 exit
-cd
-vumtk
-ns
-journalctl -xe NM_CONNECTION=4fa7c981-7048-4062-95e3-4fe451c19c69 + NM_DEVICE=wlp2s0|cat
-pgrep dhcclient
-systemctl list-unit-files --state=enabled --no-pager
-wifi-menu
-ls /etc/NetworkManager/conf.d/
-ls -a /etc/NetworkManager/conf.d/
-eopkg -F info NetworkManager
-eopkg -F info networkmanager
-eopkg sf /etc/NetworkManager/conf.d
-eopkg -F info networkmanager
-eopkg -F info networ-kmanager
-eopkg -F info network-manager
-ls /usr/lib/NetworkManager/conf.d/
-grep -i dhc /usr/lib/NetworkManager/conf.d/*
-eopkg -F info dhclient
-pgrep dhclient
-cat /proc/50859/cmdline |tr '\0' '\n'
-ls -l /var/lib/NetworkManager/dhclient-wlp2s0.conf
-sudo ls -l /var/lib/NetworkManager/dhclient-wlp2s0.conf
-sudo cat /var/lib/NetworkManager/dhclient-wlp2s0.conf
-unlock-keepass 
-batt
-frame-width
-cd emacs-profiles/mbkamble/
-rg auto-fill .
-grep fill *.el lisp/*.el
-unlock-keepass 
-unlock-keepass 
-batt
-unlock-keepass 
-unlock-keepass 
-batt
-unlock-keepass 
-unlock-keepass 
-unlock-keepass 
-unlock-keepass 
-unlock-keepass 
-unlock-keepass 
-unlock-keepass 
-unlock-keepass 
-ff emacs-profiles/mbkamble/milindkamble.el 
+ff history
+llt
+ff history
+exit
+ff history
+exit

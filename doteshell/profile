@@ -59,3 +59,20 @@
                       kdbx pwd kdbx-sec
                       )
     ))
+
+(defun eshell/kbsetup (key &optional reset)
+  "change keyboard layout using setxkbmap under Xwindows"
+  (let*
+      ((match-patt (cond
+                    ((s-equals? key "aaaa") "AT Translated.+keyboard")
+                    ((s-equals? key "dybo") "Sofle\\s-+id.+keyboard")
+                    ;; \s- in elisp regex for whitespace. using \\\s is a pitfall bcos then match-patt becomes '\ +' as \s is interpolated into a space
+                    "dont care"
+                    ))
+       (kbid-from-xinput (car (eshell-command-result-filter "xinput list" match-patt)))
+       (kbid (if kbid-from-xinput (caddr (s-split "id=\\|\t"
+                                                  kbid-from-xinput))))
+       (setxkbmap-options (format "-device %s -layout us %s" kbid
+                                  (if reset "-option" "-variant dvorak -option ctrl:nocaps"))))
+    (if kbid (eshell-plain-command "setxkbmap" (s-split " " setxkbmap-options)))
+    (format "key=%s patt=%s kbid-from-xinput=%s kbid=%s xkbmap-options=%s" key match-patt kbid-from-xinput kbid setxkbmap-options)))
