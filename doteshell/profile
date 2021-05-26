@@ -30,36 +30,6 @@
   (battery-format "Load:%p%%   Status:%B  Time Remaining:%t"
                   (funcall battery-status-function)))
 
-# An eshell command to unlock the KeepassXC GUI-app
-# remotely without explicitly entering the password
-# Lot of learning and experimenting during development, but the
-# shortness of code is impressive.
-# Reading the safebox.gpg file auto decrypts it into plain text
-# (thanks to EPA). parson-parse converts json-structured
-# string into hierarchical alist, from which we extract the values of
-# password and security file. Finally the dbus API is used to execute
-# the method openDatabase on the keepass service
-(defun eshell/unlock-keepass ()
-  (require 'parson)
-  (require 'dbus)
-  (let* ((strong-box (expand-file-name
-                      "~/.gnupg/keepass/keepass_safebox.gpg"))
-         (kdbx (expand-file-name
-                "~/.gnupg/keepass/khaazgee_milind_keepass.kdbx"))
-         (pwd-db (parson-parse (get-string-from-file
-                                strong-box)))
-         (kdbx-sec (alist-get "keepasssec" (alist-get "mil" pwd-db nil nil
-                                                     'string=)
-                              nil nil 'string=))
-         (pwd (alist-get "keepasspwd" (alist-get "mil" pwd-db nil nil
-                                                 'string=)
-                         nil nil 'string=)))
-    (dbus-call-method :session "org.keepassxc.KeePassXC.MainWindow"
-                      "/keepassxc" "org.keepassxc.MainWindow" "openDatabase"
-                      kdbx pwd kdbx-sec
-                      )
-    ))
-
 (defun eshell/kbsetup (key &optional reset)
   "change keyboard layout using setxkbmap under Xwindows"
   (let*

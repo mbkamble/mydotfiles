@@ -2,10 +2,12 @@ alias aaaa kbsetup aaaa
 alias dybo kbsetup dybo reset  # for sofle we don't want variant dvorak bcos it is handled natively by the keyboard
 alias ff find-file $1 # if we use $* instead of $1, find-file gets "list of strings" as argument and find-file expects only one string
 alias vumtk nmcli con up id MTKAP2
-alias vuph nmcli con down id gargoylearea55phoot
+alias vulk nmcli con up id linksyskamble
 alias vdtx nmcli con down id PIATX
 alias vutx nmcli con up id PIATX
 alias vuk3 nmcli con up id kamble3
 alias vdk3 nmcli con down id kamble3
 alias ns nmcli con show --active
 alias llt ls -ltrh $*
+alias pia wget --quiet https://www.privateinternetaccess.com/ -O -|pandoc -f html -t plain|grep -iP "you are .*protect"
+alias qb flatpak run org.qutebrowser.qutebrowser

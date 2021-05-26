@@ -14,8 +14,11 @@
 	type = cat-file -t
 	dump = cat-file -p
 	sh = show
+	lc = log-compact
 [core]
 	filemode = false
 	autocrlf = input
 [push]
 	default = current
+[log-compact]
+	defaults = --two-initials --abbrev=8

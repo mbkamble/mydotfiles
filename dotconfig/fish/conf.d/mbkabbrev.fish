@@ -6,11 +6,15 @@ if status --is-interactive
     abbr -a sfllrl 'gio open ~/Pictures/sofle_lower_layer.png'
     abbr -a sflrsl 'gio open ~/Pictures/sofle_raise_layer.png'
     abbr -a sflmml 'gio open ~/Pictures/sofle_mmedia_layer.png'
+    abbr -a pia 'wget --quiet https://www.privateinternetaccess.com/ -O -|pandoc -f html -t plain|grep -iP "you are .*protect"'
+    abbr -a slideshow 'eog -s'  # eye-of-gnome slideshow viewer
+    abbr -a slides 'eog -s'  # eye-of-gnome slideshow viewer
+    abbr -a qb 'flatpak run org.qutebrowser.qutebrowser &'
     abbr -a gop 'gio open'
     abbr -a area52nasdoc 'sudo mount -t cifs //192.168.7.10/Documents -o vers=3.0,username=mbkamble,domain=WORKGROUP,uid=1000,gid=1000 ~/area52nas_shares/Documents'
     abbr -a aaaa "setxkbmap -device (xinput list|sed -En '/AT Trans.+keyboard/ {s/.+id=([0-9]+)\s.+/\1/p}') -layout us -variant dvorak -option 'ctrl:nocaps'"
     abbr -a bbbb "setxkbmap -device (xinput list|sed -En '/AT Trans.+keyboard/ {s/.+id=([0-9]+)\s.+/\1/p}') -layout us -option ''"
-    abbr -a dybo "setxkbmap -device (xinput list|sed -En '/Sofle.+keyboard/ {s/.+id=([0-9]+)\s.+/\1/p}') -layout us -option ''"
+    abbr -a dybo "setxkbmap -device (xinput list|sed -En '/Sofle\s+id.+keyboard/ {s/.+id=([0-9]+)\s.+/\1/p}') -layout us -option ''"
     abbr -a adad "kbsetup rk61"
     abbr -a agag "kbsetup Inatek"
     abbr -a ahah "kbsetup sculpt"

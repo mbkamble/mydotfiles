@@ -1,128 +1,128 @@
-(type-of (eshell-command-result-filter "xinput list" "AT Trans.+keybo"))
-(llength (eshell-command-result-filter "xinput list" "AT Trans.+keybo"))
-(len (eshell-command-result-filter "xinput list" "AT Trans.+keybo"))
-(length (eshell-command-result-filter "xinput list" "AT Trans.+keybo"))
-(car (eshell-command-result-filter "xinput list" "AT Trans.+keybo"))
-(type-of (car (eshell-command-result-filter "xinput list" "AT Trans.+keybo")))
-(set foo (car (eshell-command-result-filter "xinput list" "AT Trans.+keybo")))
-(setq foo (car (eshell-command-result-filter "xinput list" "AT Trans.+keybo")))
-foo
-(type-of foo)
-echo $foo
-(s-slice-at "=" foo)
-(s-slice-at "\\= \\]" foo)
-(s-slice-at "\\[= \\]" foo)
-(s-slice-at "[= ]" foo)
-(s-slice-at "[=0-9]" foo)
-(s-slice-at "=[0-9]+" foo)
-(s-slice-at "=|[0-9]+" foo)
-(s-slice-at "=\\|[0-9]+" foo)
-(s-slice-at "id=" foo)
-(car (s-slice-at "id=" foo))
-(cadr (s-slice-at "id=" foo))
-(s-split "id=" foo)
-(s-split "id=\\| " foo)
-(s-split "id=| " foo)
-(s-split "id=\\| " foo)
-(s-split "id=\\| *" foo)
-(s-split "id=\\| +" foo)
-echo $foo
-(s-split "id=\\|\t+" foo)
-(s-split "id=\\|\sc+" foo)
-(s-split "id=\\|\\\sc+" foo)
-(s-split "id=\\|\\\s-+" foo)
-(s-split "id=\\|\s-+" foo)
-(s-split "id=\\|\s-" foo)
-(s-split "id=\\|\\\s-" foo)
-(s-split "id=\\|\s-" foo)
-(s-split "id=\\|\t" foo)
-xinput
-(s-split "id=\\|\t" foo)
-(caaadr (s-split "id=\\|\t" foo))
-(caaar (s-split "id=\\|\t" foo))
-(caddr (s-split "id=\\|\t" foo))
-(s-equals "abc" "abc")
-(s-equals? "abc" "abc")
-kbsetup
-kbsetup aaaa
-kbsetup aaaa
-kbsetup aaaa
-kbsetup aaaa
-kbsetup aaaa
-kbsetup dybo
-(if (s-equals? "aaa" "bbb") "milind" "kamble")
-(if (s-equals? "aaa" "bbb") "milind" "kamble" "hello")
-(if (s-equals? "aaa" "aaa") "milind" "kamble" "hello")
-(if (s-equals? "aaa" "bbb") "milind")
-(if (s-equals? "aaa" "bbb") "milind" nil)
-(type-of ((if (s-equals? "aaa" "bbb") "milind")))
-(if (s-equals? "aaa" "bbb") "milind")
-(type-of (if (s-equals? "aaa" "bbb") "milind"))
-echo $(if (s-equals? "aaa" "bbb") "milind")
-echo $(if (s-equals? "aaa" "bbb") "milind" nil)
-echo $(if (s-equals? "aaa" "bbb") "milind" t)
-(eshell-plain-command "ls" "-l")
-(eshell-plain-command "ls" ("-l"))
-(eshell-plain-command "ls" '("-l"))
-(eshell-plain-command "setxkmap" '("-device" "14" "-layout" "us" "-variant" "dvorak" "-option" "ctrl:nocaps"))
-(eshell-plain-command "setxkbmap" '("-device" "14" "-layout" "us" "-variant" "dvorak" "-option" "ctrl:nocaps"))
-(e-split "setxkbmap -device kbid -layout us -variant dvorak -option ctrl:nocaps")
-(s-split "setxkbmap -device kbid -layout us -variant dvorak -option ctrl:nocaps")
-(s-split-words "setxkbmap -device kbid -layout us -variant dvorak -option ctrl:nocaps")
-(s-split " "  "setxkbmap -device kbid -layout us -variant dvorak -option ctrl:nocaps")
-kbsetup aaaa
-(format "foo %d milind" 14)
-kbsetup aaaa
-kbsetup dybo
-kbsetup dybo
-(format "%s" nil)
-kbsetup dybo
-kbsetup aaaa
-xinput list
-kbsetup aaaa
-kbsetup aaaa
-kbsetup dybo
-kbsetup dybo
-kbsetup dybo
-kbsetup aaaa
-kbsetup aaaa
-kbsetup aaaa
-kbsetup aaaa
-kbsetup aaaa
-(format "-device %s -layout us -variant dvorak -option ctrl:nocaps" 14)
-kbsetup aaaa
-kbsetup dybo
-kbsetup aaaa
-kbsetup dybo
-kbsetup dybo
-kbsetup aaaa
-kbsetup aaaa
-kbsetup aaaa
-kbsetup aaaa
-kbsetup aaaa reset
-kbsetup aaaa
-makunbound kbsetup
-which kbsetup
-ediff-files ~/opensource/mydotfiles/doteshell/alias ~/emacs-profiles/mbkamble/etc/eshell/aliases
-. ~/opensource/mydotfiles/doteshell/alias
-. ~/opensource/mydotfiles/doteshell/alias
-dybo
-dybo
-dybo
-dybo
-. ~/opensource/mydotfiles/doteshell/alias
-dybo
+(getenv "BC16")
+echo $BC15
+ff $BC15
+echo $BCCFG
+cd docs/account_books/
+bean-check -C $BC17
+date
+ls ~/Downloads/
+ls ~/Downloads/mihir_passport_ds11_filled_10252020.pdf
+ff ~/Downloads/mihir_passport_ds11_filled_10252020.pdf
+ff ~/Downloads/mihir_passport_ds11_filled_10262020.pdf
+batt
 exit
-alias foo "find-file $*"
-alias foo 'find-file $*'
 exit
-llt pro*
+flatpak run org.keepassxc.KeePassXC
+flatpak run org.keepassxc.KeePassXC&
+pdftotext -layout ~/docs/Bills_Receipts_Rebates/2020/pagaar/Milind_AMD_05242020.pdf -
+pdftotext -layout ~/docs/Bills_Receipts_Rebates/2020/Bank_Brokerage/FirstTech_8447_012020.pdf -
+eshell-read-aliases-list
+qb &
+ls /run/media/mbkamble/MihirStuff/
+cp /run/media/mbkamble/MihirStuff/*pdf ~/tmp/
+zathura  /run/media/mbkamble/MihirStuff/Sofle_blankkeys.pdf&
+zathura  /run/media/mbkamble/MihirStuff/qmk_mbkamble_soflev1_dvorak.pdf&
+ns
+qb &
+cd
+alias
+flatpak run org.keepassxc.KeePassXC&
+qb&
+flatpak run org.keepassxc.KeePassXC&
+qb&
+ip a
+qb&
+qb&
+flatpak run org.keepassxc.KeePassXC&
+qb&
+cd ~/docs/Bills_Receipts_Rebates/2020/pagaar/
+pdftotext --layout Uma_TDI_042020.pdf -
+pdftotext -layout Uma_TDI_042020.pdf -
+pdftotext -layout Uma_TDI_052020.pdf -
+pdftotext -layout Uma_TDI_062020.pdf -
+pdftotext -layout Uma_TDI_072020.pdf -
+pdftotext -layout Uma_TDI_082020.pdf -
+cd ../CrCard/
+for i in MihirAm*; echo $i; end
+for i in MihirAm* { echo $i}
+for i in MihirAm* { echo pdftotext -layout  $i -; echo $i}
+for i in MihirAm* { echo $i "------"; pdftotext -layout  $i -}
+cd -
+pdftotext -layout Uma_TDI_092020.pdf -
+pdftotext -layout Uma_TDI_102020.pdf -
+pdftotext -layout Uma_TDI_112020.pdf -
+pdftotext -layout Uma_TDI_122020.pdf -
+cd ../../2018/Bank_Brokerage/
+pdftotext -layout UFCU_9283_052018.pdf -
+ls ../../2020/*CrCard*
+ls ../../2020/
+ls ../../2020/Bank_Brokerage/*CrCard*
+ls ../../2019/Bank_Brokerage/*CrCard*
+mv ../../2019/Bank_Brokerage/*CrCard* ../../2019/CrCard/
+cd docs/account_books/
+cd ~/docs/account_books/
+bean-extract -f 2019.beancount.asc beancount.import.config ~/ofxdownloads/ufcu_mihir.qfx > ~/ofxdownloads/newxac.bct
+grep -i acct ~/ofxdownloads/mihir_ufcu_529checking.qfx
+grep -i account ~/ofxdownloads/mihir_ufcu_529checking.qfx
+grep -i acct ~/ofxdownloads/mihir_ufcu_529checking.qfx
+bean-extract -f 2019.beancount.asc beancount.import.config ~/ofxdownloads/mihir_ufcu_529checking.qfx > ~/ofxdownloads/newxac.bct
+~
+qb&
+flatpak run org.keepassxc.KeePassXC&
+qb&
+(/ 4000 230.0)
+(* 71.4 60)
+(* 17.4 60)
+(and 'foo "*")
+(and 'foo (concat " " 'foo) "*")
+(and "foo" (concat " " "foo") "*")
+(sequencep "foo")
+(/ 6740.0 800)
+flatpak run org.keepassxc.KeePassXC&
+qb&
+pia 
+exit
+flatpak run org.keepassxc.KeePassXC&
+qb&
+(/ 4950 15.0)
+pia
+exit
+flatpak run org.keepassxc.KeePassXC&
+qb&
+jobs
+tty
+pstree -s 5097
+exit
+(my-lookup-key "C-x C-k")
+(key "C-x C-k")
+(keyboard "C-x C-k")
+(kbd "C-x C-k")
+(my-lookup-key (kbd "C-x C-k"))
+(my-lookup-key (kbd "C-x C-r" "g"))
+(my-lookup-key (kbd "C-x C-r g"))
+(my-lookup-key (kbd "C-x"))
+(my-lookup-key-prefix (kbd "C-x"))
+(key-description '[3 22 14])
+(key-description '[3 22 14 20] )
+(key-description '[3 22 14 32] )
+flatpak run org.keepassxc.KeePassXC&
+nohup flatpak run org.keepassxc.KeePassXC
+nohup flatpak run org.keepassxc.KeePassXC&
+nohup flatpak run org.qutebrowser.qutebrowser&
+exit
+cd
+eshell-kill-processes-on-exit
+echo $eshell-kill-processes-on-exit
+xclock&
+xwd
 llt
-ff history
-exit
-ff history
-llt
-ff history
-exit
-ff history
-exit
+htop
+(frame-monitor-geometry)
+(frame-monitor-attributes)
+(frame-char-width)
+(frame-width)
+(frame-height)
+(int (* 211 0.75))
+(floor (* 211 0.75))
+(ceil (* 211 0.75))
+(ciel (* 211 0.75))
