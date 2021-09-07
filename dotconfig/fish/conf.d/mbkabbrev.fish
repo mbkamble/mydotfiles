@@ -2,6 +2,7 @@ if status --is-interactive
     # based on example code in documentation/commands.html
     set -g fish_user_abbreviations
     # abbr -a lsfl
+    abbr -a mcsleep 'sudo bash -c "echo mem > /sys/power/state"'
     abbr -a sfldvl 'gio open ~/Pictures/sofle_dvorak_layer.png'
     abbr -a sfllrl 'gio open ~/Pictures/sofle_lower_layer.png'
     abbr -a sflrsl 'gio open ~/Pictures/sofle_raise_layer.png'
@@ -19,7 +20,7 @@ if status --is-interactive
     abbr -a agag "kbsetup Inatek"
     abbr -a ahah "kbsetup sculpt"
     abbr -a asas "kbsetup k7"
-    abbr -a batt "upower -i (upower -e|grep battery) | grep -P 'percentage|time|state'"
+    abbr -a batt 'upower -i (upower -e|grep battery) | perl -ane \'if (/state:/) {$state=$F[-1]}; if (/time to /) {$rem="$F[-2] $F[-1]"}; if (/percentage:/){$per=$F[-1]}; END{print "$state($per) time remaining:$rem\n"}\''
     abbr -a cathtml "links -dump"
     abbr -a cs "xdg-open ^ /dev/null"
     abbr -a deltrash "gio trash --empty"

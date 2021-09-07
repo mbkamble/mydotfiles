@@ -24,13 +24,16 @@ config.bind('pw', 'spawn -u qute-keepassxc --key milind.b.kamble@gmail.com -s /r
 config.bind('pc', 'jseval if(window.location.href.indexOf("icici")>=0){document.getElementById("user-id-goahead").dispatchEvent(new Event("click",{"bubbles":true}));}')
 
 # bindings for morningstar reports massaging and dumping of html
-config.bind('pm', 'jseval --file -w main mrgstar_load_sal_iframe.js', mode='normal')
-config.bind('tmi', 'jseval --file -w main mrgstar_financials_income.js', mode='normal')
-config.bind('tmc', 'jseval --file -w main mrgstar_financials_cash.js', mode='normal')
-config.bind('tmb', 'jseval --file -w main mrgstar_financials_balance.js', mode='normal')
-config.bind('tmx', 'jseval --file -w main mrgstar_expand_sections.js', mode='normal')
-config.bind('tme', 'jseval --file -w main mrgstar_financials_export.js', mode='normal')
-config.bind('ps', 'jseval --file -w main dump_current_DOM.js', mode='normal')
+# bindings starting with 't' seem to support 3 char prefix.
+config.bind('tmm', 'jseval -w main window.location.href = $("#sal_iframe")[0].src') # load only the iframe so that DOM contains html of all tables
+config.bind('tmf', '''jseval -w main $("a.mds-link:contains('Details View')")[0].click()''') # expand the details view
+config.bind('tma', '''jseval -w main $("mds-button[value='Annual']")[0].click(); $("mds-button[value='Restated']")[0].click()''') # select Annual-restated view of financials
+config.bind('tme', '''jseval -w main $.each($("a.more-data"), function(index,val){val.click();})''') # expand all sections
+config.bind('tmx', '''jseval -w main $("button.sal-financials-details__export")[0].click()''') # export the financials into excel using Export-to-Excel
+config.bind('tmi', '''jseval -w main $("mds-button[value='Income Statement']")[0].click()''') #  income statement
+config.bind('tmb', '''jseval -w main $("mds-button[value='Balance Sheet']")[0].click()''') # balance sheet statement
+config.bind('tmc', '''jseval -w main $("mds-button[value='Cash Flow']")[0].click()''') # cash flow statement
+config.bind('tms', 'jseval --file -w main dump_current_DOM.js', mode='normal') # save html source to extract valuation and oper-perf data
 
 # disable ad block temporarily
 config.bind(',a', 'set content.blocking.enabled false ;; reload -f ;; later 5s set content.blocking.enabled true')
