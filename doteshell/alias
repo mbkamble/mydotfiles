@@ -1,6 +1,7 @@
 alias aaaa kbsetup aaaa
 alias dybo kbsetup dybo reset  # for sofle we don't want variant dvorak bcos it is handled natively by the keyboard
 alias ff find-file $1 # if we use $* instead of $1, find-file gets "list of strings" as argument and find-file expects only one string
+alias mcsleep sudo bash -c "echo mem > /sys/power/state"
 alias vumtk nmcli con up id MTKAP2
 alias vulk nmcli con up id linksyskamble
 alias vdtx nmcli con down id PIATX
