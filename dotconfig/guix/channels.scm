@@ -1,6 +1,7 @@
 ;; %default-channels is exported by module (guix channels) and points to guix
 ;; channel rde is Adrew Tropins Reproducible Dev Env and provides =home-environment= and =operating-system= configuration
-(cons*
+
+(cons*   ;; -- so long as we are not using %default-channels
  (channel
   (name 'nonguix)
   (url "https://gitlab.com/nonguix/nonguix")
@@ -15,28 +16,35 @@
  (channel
   (name 'flat)
   (url "https://github.com/flatwhatson/guix-channel.git")
+  ;; (commit
+  ;;         "657da22f0229b978b7bf4e4d476f59f17f6a175f")
   (introduction
    (make-channel-introduction
     "33f86a4b48205c0dc19d7c036c85393f0766f806"
     (openpgp-fingerprint
      "736A C00E 1254 378B A982  7AF6 9DBE 8265 81B6 4490"))))
- ;; (channel
- ;;  (name 'rde)
- ;;  (url "https://git.sr.ht/~abcdw/rde")
- ;;  (introduction
- ;;   (make-channel-introduction
- ;;    "257cebd587b66e4d865b3537a9a88cccd7107c95"
- ;;    (openpgp-fingerprint
- ;;     "2841 9AC6 5038 7440 C7E9  2FFA 2208 D209 58C1 DEB0"))))
+ (channel
+  (name 'rde)
+  (url "https://git.sr.ht/~abcdw/rde")
+  ;; (commit
+  ;;         "67c337acfa34eb4ee0a10e807b54a72a53f03f68")
+  (introduction
+   (make-channel-introduction
+    "257cebd587b66e4d865b3537a9a88cccd7107c95"
+    (openpgp-fingerprint
+     "2841 9AC6 5038 7440 C7E9  2FFA 2208 D209 58C1 DEB0"))))
  (channel
   (name 'emacs)
   (url "https://github.com/babariviere/guix-emacs")
+  ;; (commit
+  ;;         "6815af364c4652afc368d562f972ed87c083f76a")
   (introduction
    (make-channel-introduction
     "72ca4ef5b572fea10a4589c37264fa35d4564783"
     (openpgp-fingerprint
      "261C A284 3452 FB01 F6DF  6CF4 F9B7 864F 2AB4 6F18"))))
- %default-channels)
+  %default-channels
+ )
 
 ;; other channels to consider
 ;;;; (channel

@@ -10,15 +10,14 @@
   (gnu services)
   (guix gexp)
   (gnu packages shells)
-  (gnu home services shells))
+  (gnu home services shells)
+  (gnu home-services gnupg))
 
 (home-environment
   (packages
     (map (compose list specification->package+output)
          (list
 	  "gnupg@2"
-	  "pinentry"
-          "file"
 	  "fish"
 
 	  ;; following are provided by %base-pacakges
@@ -41,6 +40,42 @@
                 (list (local-file
                         "/home/mbkamble/.bash_profile"
                         "bash_profile")))))
+	  (service
+	    home-gnupg-service-type
+	    (home-gnupg-configuration
+	     (gpg-config
+	      (home-gpg-configuration
+	       (extra-config
+		'((default-key . "9F711C92")
+		  (cipher-algo . "AES256")
+		  (expert? . #t)
+		  (with-fingerprint? . #t)
+		  (list-options . "show-keyring")
+		  (with-keygrip? . #t)
+		  (keyid-format . "0xlong")
+		  (utf8-strings? . #t)
+		  (keyserver . "hkp://keys.gnupg.net")
+		  ))))
+	     (gpg-agent-config
+	      (home-gpg-agent-configuration
+	       (ssh-agent? #t)
+	       (ssh-keys
+		'(("6A9063863762271CCD05409B60FA08E46730BDA4")
+		  ("CA067DC323D613B859EC0DD8049BA9A2E68B84A6")))
+	       (pinentry-flavor 'rofi)
+	       (extra-config
+		`((max-cache-ttl . 214748364)
+		  (default-cache-ttl . 214748364)
+		  (max-cache-ttl-ssh . 214748364)
+		  (default-cache-ttl-ssh . 214748364)
+		  (allow-loopback-pinentry? . #t)
+		  (allow-emacs-pinentry? . #t)
+		  (log-file . ,(string-append (getenv "HOME") "/tmp/gpg-agent.log"))
+		  (debug-level . 2)
+		  ;; (debug . 1024)   ; debug and debug-pinentry are useful to debug agent-to-pinentry messages
+		  ;; (debug-pinentry? . #t)
+		  )))
+	     ))) ;; should complete service instance of home-gnupg-service-type
 	  (service
             home-fish-service-type
             (home-fish-configuration

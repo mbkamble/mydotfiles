@@ -6,6 +6,7 @@
    "ungoogled-chromium"
    "vlc"
    "rofi"
+   "pinentry"
    "pinentry-rofi"
    "pinentry-gnome3"
    "blender"

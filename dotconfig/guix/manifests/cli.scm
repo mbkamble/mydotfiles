@@ -3,7 +3,7 @@
    "git" "mercurial"   
    "fish-foreign-env"
    "perl-image-exiftool"
-   "pinentry"
+   "file"
    "efibootmgr"
    "strace"
    "dmidecode"
@@ -18,7 +18,6 @@
    "grep"
    "ncurses"             ; needed for tput
    "which"
-   "fish"
    "fd"                  ; a replacement for find (~80% of use cases)
    "guile"
    ))

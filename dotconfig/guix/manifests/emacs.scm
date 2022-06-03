@@ -1,8 +1,9 @@
 (specifications->manifest
  '(
-   "emacs-no-littering"
+   "emacs"
    "emacs-exwm"
    "emacs-desktop-environment"
+   "emacs-no-littering"
    "emacs-undo-tree"
    "emacs-all-the-icons"
    "emacs-vertico"

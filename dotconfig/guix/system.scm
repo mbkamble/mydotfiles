@@ -57,10 +57,6 @@ EndSection
  (packages
   (append
    (list
-    ;; emacs
-    (specification->package "emacs")
-    (specification->package "emacs-exwm")
-    (specification->package "emacs-desktop-environment")
     ;; system tools
     (specification->package "nss-certs")
     (specification->package "nss-certs")
