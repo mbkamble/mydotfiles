@@ -8,5 +8,9 @@
 
 (define-public my-cc-packages
   '())
-   
+
+(define-public my-guile-packages
+  '(
+    "guile"
+    ))
 

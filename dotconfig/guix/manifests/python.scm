@@ -1,7 +1,0 @@
-(specifications->manifest
- '(
-   "python"
-   "beancount"
-   ))
-   
-

@@ -21,7 +21,7 @@
    "ncurses"             ; needed for tput
    "which"
    "fd"                  ; a replacement for find (~80% of use cases)
-   "guile"
+   "xdg-open"
    ))
    
 
