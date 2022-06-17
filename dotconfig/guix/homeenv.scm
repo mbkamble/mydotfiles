@@ -30,6 +30,8 @@
 	"gnupg@2"
 	"fish"
 	"git"
+	"font-victor-mono"
+	"font-adobe-source-sans-pro"
 
 	;; following are provided by %base-pacakges
 	;; "less" "grep" "which"
@@ -98,7 +100,8 @@
 	     ("pphtml" . "links -dump") ;; pretty-print to text format
 	     ;; ("asciidoctor" . "source ~/.rvm/scripts/rvm; and asciidoctor")
 	     ("sscan" . "simple-scan") ;; we might have to XDG_CURRENT_DESKTOP=XFCE simple-scan if Ctrl-1 etc keyboard shortcuts dont work
-	     ("catpdf" . "pdftotext -fixed 3 -enc ASCII7")))
+	     ("allinstalledpkgs" . "ls -1d /run/current-system/profile  $GUIX_EXTRA_PROFILES/*/* ~/.guix-home/profile ~/.config/guix/current|grep -Pv 'link|lock'|xargs -izzz guix package -p zzz -I . ")	 
+	      ("catpdf" . "pdftotext -fixed 3 -enc ASCII7")))
           (environment-variables
 	   '(("SSH_AUTH_SOCK" . "$XDG_RUNTIME_DIR/gnupg/S.gpg-agent.ssh")
 	     ;; ("GUIX_EXTRA_PROFILES" . "$HOME/.guix-extra-profiles")
@@ -131,16 +134,16 @@ end\n")))
 
 	;; this creates a file blah-init.el in the store (/gnu/store) and makes a soft link to it
 	;; in ~/.guix-home/files/config/emacs/foo-init.el
-	;; (simple-service 'emacs-init
-	;; 		home-files-service-type
-	;; 		`(("config/emacs/foo-init.el"
-	;; 		   ,(local-file "../../dotemacsdotd/init.el"))
-	;; 		  ))
+	(simple-service 'my-elisp
+			home-files-service-type
+			`((".emacs.d/lisp/utils.el"
+			   ,(local-file "../../dotemacsdotd/lisp/utils.el"))
+			  ))
 	(service
 	 home-emacs-service-type
 	 (home-emacs-configuration
 	  (package emacs)
-	  ;; (rebuild-elisp-packages? #t)
+	  (rebuild-elisp-packages? #t)
 	  (elisp-packages
 	   (map specification->package my-emacs-packages))
 	  (xdg-flavor? #f)
@@ -158,4 +161,4 @@ end\n")))
 ;; Also, the semantics of file-like objects created by "plain-file" and "mixed-text-file" is that Guix crated files named blah1-my-plain-custom.fish and blah2-my-mixed-custom.fish are created in the store and that content is also included in config.fish
 ;; when emacs-service was tried for the first few iterations, it created synlinks in "$HOME/emacs.d/{init,early-init}.el instead of in $HOME/.emacs. The flaw was in rde/gnu/home-services/emacs.scm where get-emacs-configuration-files function was using the strings "emacs/" and "emacs.d/". The hack was to copy this file to <mydotfilesrepo>/dotconfig/guix/my-modules/my-home-services/emacs.scm, update the module definition to match the new path, update the use-modules in homeenv.scmw fix the strings and reconfigure
 
-;; coomand to reconfigure is: guix home reconfigure -L <mydotfiles-repo>/dotconfig/guix/my-modules <this-file>
+;; command to reconfigure is: guix home reconfigure -L <mydotfiles-repo>/dotconfig/guix/my-modules <this-file>

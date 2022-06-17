@@ -6,10 +6,12 @@
    "fish-foreign-env"
    "perl-image-exiftool"
    "file"
+   "ispell"
    "efibootmgr"
    "strace"
    "dmidecode"
    "lshw"
+   "lsof" "lsofgraph"
    "rsync"
    "ncurses"
    "binutils"
@@ -21,7 +23,7 @@
    "ncurses"             ; needed for tput
    "which"
    "fd"                  ; a replacement for find (~80% of use cases)
-   "xdg-open"
+   "xdg-utils"           ; provides xdg-open,settings,email,mime etc.
    ))
    
 
