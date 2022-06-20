@@ -32,6 +32,8 @@
 	"git"
 	"font-victor-mono"
 	"font-adobe-source-sans-pro"
+	"font-google-material-design-icons"
+	"clang"   ;; for clang, clang++, clangd and other tools
 
 	;; following are provided by %base-pacakges
 	;; "less" "grep" "which"

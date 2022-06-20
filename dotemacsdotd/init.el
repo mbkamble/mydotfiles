@@ -17,6 +17,105 @@
 (setq use-package-always-ensure nil)  ;; do not install missing packages
 (setq use-package-always-defer t)
 
+;; *** `emacs' native settings
+;; see https://www.reddit.com/r/emacs/comments/mk9ehd/curious_whats_the_use_of_usepackage_emacs/
+;; use-package emacs is a special way to keep your settings unrelated to any package.
+(use-package emacs
+  :custom
+  ((require-final-newline t)
+   ;; ignore case for completions
+   (completion-ignore-case t)
+   (read-file-name-completion-ignore-case t)
+   (read-buffer-completion-ignore-case t)
+   (auto-save-visited-mode +1)
+   (auto-save-visited-interval 5)
+   )
+  :config
+  (fset 'yes-or-no-p 'y-or-n-p)
+  (setq isearch-lazy-count t  ; Some very small tweaks for isearch
+	search-whitespace-regexp ".*?"
+	isearch-allow-scroll 'unlimited)
+  ;; desktop session save settings
+  (setq desktop-restore-frames nil)  ;; uses frame parameters (fonts, faces etc) from init file instead from previous session
+  (desktop-save-mode 1)  ;; aito save desktop when exiting Emacs
+  ;; :init -- I thhink all the customization can be done in config instead of init
+  
+  ;; begin recommendation by vertico author
+  ;; Add prompt indicator to `completing-read-multiple'.
+  ;; We display [CRM<separator>], e.g., [CRM,] if the separator is a comma.
+  (defun crm-indicator (args)
+    (cons (format "[CRM%s] %s"
+                  (replace-regexp-in-string
+                   "\\`\\[.*?]\\*\\|\\[.*?]\\*\\'" ""
+                   crm-separator)
+                  (car args))
+          (cdr args)))
+  (advice-add #'completing-read-multiple :filter-args #'crm-indicator)
+
+  ;; Do not allow the cursor to move into prompt area of minibuffer
+  (setq minibuffer-prompt-properties
+        '(read-only t cursor-intangible t face minibuffer-prompt))
+  (add-hook 'minibuffer-setup-hook #'cursor-intangible-mode)
+  ;; end recommendation by vertico author
+
+  ;; ux elements
+  (set-face-attribute 'default nil :family "Victor Mono" :height 120)
+  ;; As per https://protesilaos.com/codelog/2020-09-05-emacs-note-mixed-font-heights/
+  ;; we need to specify height of other fonts relative to default for text-scaling to work
+  ;; implicit height does not work, we need to explicitly specify the :height 1.0
+  (set-face-attribute 'fixed-pitch nil :family "Victor Mono" :height 1.0)
+  (set-face-attribute 'variable-pitch nil :family "Source Sans 3" :height 1.0)
+
+  ;; begin create a hook to run after load-theme so that we can customize some faces in the theme
+  (defvar mbk/after-load-theme-hook nil
+    "Hook run after a color theme is loaded using `load-theme'.")
+  (defadvice load-theme (after mbk/run-after-load-theme-hook activate)
+    "Run `after-load-theme-hook'."
+    ;; debug (message (format "mbk: calling run-hooks. mbk/after-load-theme-hook=%s" mbk/after-load-theme-hook))
+    (run-hooks 'mbk/after-load-theme-hook))
+  (defun mbk/customize-poet ()
+    "Customize poet theme"
+    (if (member 'poet custom-enabled-themes) ;; use `progn' to add debug msg for `then' clause
+	(custom-theme-set-faces 'user  ;; need to use `user'. `poet is overridden by `user''
+				'(font-lock-comment-face
+				  ((t (:slant italic :weight normal))))))) ;; weight = thin|normal|heavy
+  ;; end create after load-theme hook
+  ;; modeline customization
+  ;;**** customize modeline-modified indicator using chain icon 
+  ;; mode-line-modified is a mode line construct for displaying whether current buffer is modified.
+  ;; we beautify it with faicon (fa means fontawesome family)
+  ;; see also https://github.com/domtronn/all-the-icons.el/wiki/Mode-Line
+  (defun mbk/modeline-modified ()
+    (let* ((config-alist   ;; hash like datastructure. key . (family icon-select-func parameter-for-icon-select)
+	    ;; format-mode-line returns a string representing modified status of current buffer
+	    ;; "*" means modifed, "-" means unmodified, "%" means read-on;y
+            '(("*" all-the-icons-faicon-family all-the-icons-faicon
+               "chain-broken" :height 1.2 :v-adjust -0.0)
+              ("-" all-the-icons-faicon-family all-the-icons-faicon
+               "link" :height 1.2 :v-adjust -0.0)
+              ("%" all-the-icons-octicon-family all-the-icons-octicon
+               "lock" :height 1.2 :v-adjust 0.1)))
+           (result (cdr (assoc (format-mode-line "%*") config-alist))))
+
+      (propertize (format "%s" (apply (cadr result) (cddr result)))
+                  'face `(:family ,(funcall (car result)) :inherit ))))
+  (setq-default mode-line-modified '(:eval (mbk/modeline-modified)))
+  ;;**** indiccate major-mode by suitable icon
+  ;; mode-line-client-mode is ':' for normal frames, @ for emacsclient frames
+  ;;**** major mode indicator is constructed by 'mode-name'
+  ;; we can change the font to italic by customizing mode-line-buffer-id
+  (defun mbk/modeline-mode-name ()
+    (let* ((icon (all-the-icons-icon-for-mode major-mode))
+	   (face-prop (and (stringp icon) (get-text-property 0 'face icon))))
+      (when (and (stringp icon) (not (string= major-mode icon)) face-prop)
+	(setq mode-name (propertize icon 'display '(:ascent center))))))
+  (add-hook 'after-change-major-mode-hook #'mbk/modeline-mode-name)
+
+  
+  (add-to-list
+   'load-path (expand-file-name "lisp" user-emacs-directory))
+  ) ; end of use-package emacs
+
 ;; imenu is a mean of navigation in a buffer. It can act like a TOC, for instance
 
 ;; *** `blackout'
@@ -24,8 +123,9 @@
 
 ;; *** `all-the-icons'
 (use-package all-the-icons
-	     :demand t
-	     :if (display-graphic-p))
+  :if (display-graphic-p))
+(set-fontset-font t 'unicode (font-spec :family "FontAwesome") nil 'prepend)
+(set-fontset-font t 'unicode (font-spec :family "all-the-icons") nil 'prepend)
 
 ;; *** `no-littering' - keep files inside user-emacs-directory 
 (use-package no-littering
@@ -641,6 +741,25 @@ Taken from endless parentheses."
   ;; :config
   ;; (setq geiser-guile-binary "guile3.0")  ;; needed?
   )
+;; *** `eglot'    ;; see https://github.com/joaotavora/eglot#how-does-eglot-work
+(use-package eglot ;; from https://github.com/clojure8/emacs0/tree/main/modules/lang
+  :commands (eglot)
+  :bind
+  (:map eglot-mode-map
+        ("s-<return>" . eglot-code-actions)
+        )
+  :config
+  (setq eglot-connect-timeout 10)
+  (setq eglot-sync-connect t)
+  (setq eglot-autoshutdown t)
+  )
+;; *** `consult-eglot'   ;; https://github.com/mohkale/consult-eglot
+(use-package consult-eglot
+  :after eglot
+  :commands (consult-eglot)
+  )
+(use-package consult-eglot
+  :after eglot)
 
 ;; *** `yaml'
 (use-package yaml-mode
@@ -653,72 +772,6 @@ Taken from endless parentheses."
 	 (text-mode . flyspell-mode)
 	 (text-mode . abbrev-mode)
 	 (text-mode . variable-pitch-mode)))
-
-;; *** `emacs' native settings
-;; see https://www.reddit.com/r/emacs/comments/mk9ehd/curious_whats_the_use_of_usepackage_emacs/
-;; use-package emacs is a special way to keep your settings unrelated to any package.
-(use-package emacs
-  :custom
-  ((require-final-newline t)
-   ;; ignore case for completions
-   (completion-ignore-case t)
-   (read-file-name-completion-ignore-case t)
-   (read-buffer-completion-ignore-case t)
-   (auto-save-visited-mode +1)
-   (auto-save-visited-interval 2)
-   )
-  :config
-  (fset 'yes-or-no-p 'y-or-n-p)
-  (setq isearch-lazy-count t  ; Some very small tweaks for isearch
-	search-whitespace-regexp ".*?"
-	isearch-allow-scroll 'unlimited)
-  
-  :init
-  ;; begin recommendation by vertico author
-  ;; Add prompt indicator to `completing-read-multiple'.
-  ;; We display [CRM<separator>], e.g., [CRM,] if the separator is a comma.
-  (defun crm-indicator (args)
-    (cons (format "[CRM%s] %s"
-                  (replace-regexp-in-string
-                   "\\`\\[.*?]\\*\\|\\[.*?]\\*\\'" ""
-                   crm-separator)
-                  (car args))
-          (cdr args)))
-  (advice-add #'completing-read-multiple :filter-args #'crm-indicator)
-
-  ;; Do not allow the cursor to move into prompt area of minibuffer
-  (setq minibuffer-prompt-properties
-        '(read-only t cursor-intangible t face minibuffer-prompt))
-  (add-hook 'minibuffer-setup-hook #'cursor-intangible-mode)
-  ;; end recommendation by vertico author
-
-  ;; ux elements
-  (set-face-attribute 'default nil :family "Victor Mono" :height 120)
-  (set-face-attribute 'font-lock-comment-face nil :slant 'italic)
-  ;; As per https://protesilaos.com/codelog/2020-09-05-emacs-note-mixed-font-heights/
-  ;; we need to specify height of other fonts relative to default for text-scaling to work
-  ;; implicit height does not work, we need to explicitly specify the :height 1.0
-  (set-face-attribute 'fixed-pitch nil :family "Victor Mono" :height 1.0)
-  (set-face-attribute 'variable-pitch nil :family "Source Sans 3" :height 1.0)
-
-  ;; begin create a hook to run after load-theme so that we can customize some faces in the theme
-  (defvar mbk/after-load-theme-hook nil
-    "Hook run after a color theme is loaded using `load-theme'.")
-  (defadvice load-theme (after mbk/run-after-load-theme-hook activate)
-    "Run `after-load-theme-hook'."
-    ;; debug (message (format "mbk: calling run-hooks. mbk/after-load-theme-hook=%s" mbk/after-load-theme-hook))
-    (run-hooks 'mbk/after-load-theme-hook))
-  (defun mbk/customize-poet ()
-    "Customize poet theme"
-    (if (member 'poet custom-enabled-themes) ;; use `progn' to add debug msg for `then' clause
-	(custom-theme-set-faces 'user  ;; need to use `user'. `poet is overridden by `user''
-				'(font-lock-comment-face
-				  ((t (:slant italic :weight thin)))))))
-  ;; end crate after load-theme hook
-  
-  (add-to-list
-   'load-path (expand-file-name "lisp" user-emacs-directory))
-  ) ; end of use-package emacs
 
 ;; ** my customization
 ;; *** UX

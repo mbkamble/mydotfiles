@@ -65,6 +65,8 @@
    "emacs-daemons"
    "emacs-sicp"
    "emacs-poet-theme"
+   "emacs-eglot"
+   "emacs-consult-eglot"
    
    ;; stuff from other people
    ;; "emacs-embrace"
