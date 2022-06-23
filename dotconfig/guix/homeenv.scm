@@ -34,6 +34,7 @@
 	"font-adobe-source-sans-pro"
 	"font-google-material-design-icons"
 	"clang"   ;; for clang, clang++, clangd and other tools
+	"node"    ;; Node.js
 
 	;; following are provided by %base-pacakges
 	;; "less" "grep" "which"
@@ -107,15 +108,19 @@
           (environment-variables
 	   '(("SSH_AUTH_SOCK" . "$XDG_RUNTIME_DIR/gnupg/S.gpg-agent.ssh")
 	     ;; ("GUIX_EXTRA_PROFILES" . "$HOME/.guix-extra-profiles")
+	     ("NPM_CONFIG_USERCONFIG" . "$XDG_CONFIG_HOME/npm/npmrc")
+	     ;; https://github.com/sindresorhus/guides/blob/main/npm-global-without-sudo.md
+             ;; npm config set prefix "${HOME}/.npm-packages"
+             ("NPM_PACKAGES" . "$HOME/.npm-packages")
+             ("PATH" . "$PATH $NPM_PACKAGES/bin")
+             ("MANPATH" . "$NPM_PACKAGES/share/man $MANPATH")
 	     ))
           (aliases
            '(("rmi" . "rm -i")))
-					; text-config is List of file-like objects (see Info->Guix->G-expr), which will be added to config.fish
+	  ;; text-config is List of file-like objects (see Info->Guix->G-expr), which will be added to config.fish
 	  (config
-	   `(,(plain-file "my-plain-custom.fish"
-			  "set -x MBK1 hello
-if true; and set -e MBK1; end")
-	     ,(mixed-text-file "my-mixed-custom.fish"
+	   ;; see older versions of this file for an example using `plain-file'
+	   `(,(mixed-text-file "my-mixed-custom.fish"
 			       #~(string-append "\
 # activate all the profiles created in $GUIX_EXTRA_PROFILES
 status --is-login; and not set -q __fish_guix_extra_profiles_sourced
@@ -131,7 +136,8 @@ and begin
   #set -S PATH
   set -e fish_function_path[1]
   set -g __fish_guix_extra_profiles_sourced 1
-end\n")))
+end
+export NPM_CONFIG_USERCONFIG\n")))
 	   )))       ;; endservice home-fish-service-type
 
 	;; this creates a file blah-init.el in the store (/gnu/store) and makes a soft link to it
@@ -140,6 +146,8 @@ end\n")))
 			home-files-service-type
 			`((".emacs.d/lisp/utils.el"
 			   ,(local-file "../../dotemacsdotd/lisp/utils.el"))
+			  (".config/npm/npmrc"
+			   ,(local-file "../npm/npmrc"))
 			  ))
 	(service
 	 home-emacs-service-type

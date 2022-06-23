@@ -4,6 +4,9 @@
  '(
    "python"
    "beancount"
+   "python-pandas"
+   "python-ipython"
+   "python-ipdb"
    ))
 
 (define-public my-cc-packages
