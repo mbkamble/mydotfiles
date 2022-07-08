@@ -1,0 +1,20 @@
+export GUILE_WARN_DEPRECATED=detailed
+
+HOME_ENVIRONMENT=$HOME/.guix-home
+. $HOME_ENVIRONMENT/setup-environment
+
+if [ ! -e $XDG_RUNTIME_DIR/guix-extra-profiles-sourced ]
+   then
+       export GUIX_EXTRA_PROFILES=$HOME/.guix-extra-profiles
+       for i in $GUIX_EXTRA_PROFILES/*; do
+	   profile=$i/$(basename $i)
+	   if [ -f $profile/etc/profile ]; then
+	       GUIX_PROFILE=$profile
+	       . $GUIX_PROFILE/etc/profile
+	   fi
+	   unset profile
+       done
+       touch $XDG_RUNTIME_DIR/guix-extra-profiles-sourced
+fi
+
+$HOME_ENVIRONMENT/on-first-login # this is a scheme script. it inherently checks for $XDG_RUNTIME_DIR/on-first-login-executed and does not launch shepherd if that file already exists

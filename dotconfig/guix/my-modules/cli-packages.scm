@@ -3,7 +3,6 @@
 (define-public my-cli-packages
  '(
    "git" "mercurial"   
-   "fish-foreign-env"
    "perl-image-exiftool"
    "file"
    "ispell"
@@ -14,6 +13,7 @@
    "lsof" "lsofgraph"
    "rsync"
    "ncurses"
+   "glibc"
    "binutils"
    "man-db"              ; needed for man pages (see https://guix.gnu.org/cookbook/en/guix-cookbook.html
    "info-reader"         ; needed for info pages

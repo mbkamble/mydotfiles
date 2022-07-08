@@ -5,6 +5,7 @@
    "keepassxc"
    "qutebrowser"
    "graphviz"
+   "xdot"
    "ungoogled-chromium"
    "vlc"
    "okular"

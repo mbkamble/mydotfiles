@@ -193,14 +193,14 @@
   :config (ace-link-setup-default))
 
 ;; *** `recently' for accessing recently visited files 
-;;tmp (use-package recently
-;;tmp   :blackout t
-;;tmp   :custom
-;;tmp   (recently-max 300)
-;;tmp   :bind
-;;tmp   ("C-x C-r" . #'recently-show)
-;;tmp   :config
-;;tmp   (recently-mode +1))
+(use-package recently
+  :blackout t
+  :custom
+  (recently-max 3000)
+  :bind
+  ("C-x C-r" . #'recently-show)
+  :config
+  (recently-mode +1))
 
 ;; *** magit requires package `transient' to display popups.
 (use-package transient
@@ -466,17 +466,15 @@
 
               ("C-," . sp-rewrap-sexp)
 
-              :map emacs-lisp-mode-map
-              (";" . sp-comment)
-
-              :map lisp-mode-map
-              (";" . sp-comment))
+              :map emacs-lisp-mode-map (";" . sp-comment)
+	      :map lisp-mode-map (";" . sp-comment)
+	      )
   :config
   (setq sp-show-pair-from-inside nil)
   (require 'smartparens-config)
   (smartparens-global-mode)
   (sp-with-modes 'org-mode
-		 (sp-local-pair "=" "=" :wrap "C-="))
+    (sp-local-pair "=" "=" :wrap "C-="))
   (bind-key [remap c-electric-backspace] #'sp-backward-delete-char
             smartparens-strict-mode-map)
 
@@ -485,21 +483,6 @@
          (LaTeX-mode . turn-on-smartparens-strict-mode))
   :custom ((sp-highlight-pair-overlay nil))
   )
-(use-package smartparens
-
-
-  :config
-  (require 'smartparens-config)
-
-  (with-eval-after-load 'clojure-mode
-    (define-key clojure-mode-map ";" #'sp-comment))
-
-  (with-eval-after-load 'scheme-mode
-    (define-key scheme-mode-map ";" #'sp-comment))
-
-  (sp-with-modes 'org-mode
-		 (sp-local-pair "=" "=" :wrap "C-="))
- )
 
 (use-package highlight-parentheses
   :blackout t
@@ -660,7 +643,6 @@ Taken from endless parentheses."
   (eshell-hist-ignoredups t)
   (eshell-save-history-on-exit t)
   (eshell-prefer-lisp-functions nil)
-  (eshell-prompt-regexp "[#$] ")
   ;; addding history-references to input-functions enable the use of !foo:n
   ;; to insert the nth arg of last command beg with foo
   ;; or !?foo:n for last command containing foo
@@ -738,8 +720,11 @@ Taken from endless parentheses."
 
 ;; *** `geiser' 
 (use-package geiser
-  ;; :config
+  :config
   ;; (setq geiser-guile-binary "guile3.0")  ;; needed?
+  ;; workaround for guix
+  (defun geiser-company--setup (x) nil)
+  (setq geiser-repl-company-p nil)
   )
 ;; *** `eglot'    ;; see https://github.com/joaotavora/eglot#how-does-eglot-work
 (use-package eglot ;; from https://github.com/clojure8/emacs0/tree/main/modules/lang

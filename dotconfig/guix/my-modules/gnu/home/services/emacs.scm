@@ -1,4 +1,4 @@
-(define-module (my-home-services emacs)
+(define-module (gnu home services emacs)
   #:use-module (gnu home services)
   #:use-module (gnu home-services-utils)
   #:use-module (gnu home services shepherd)
@@ -206,8 +206,8 @@ connect to it.")
     (define prefix-file
       (cut string-append
 	(if xdg-flavor?
-	    ".emacs/"        ;; mbk: bgu-fix. dot prefixes are needed so that 
-	    ".emacs.d/")     ;; init.el and early-init.el are created in $HOME/.emacs.d
+	    ".emacs/"
+	    ".emacs.d/")
 	<>))
 
     (define (filter-fields field)
@@ -259,21 +259,22 @@ connect to it.")
    "List of expressions to add to @code{ealy-init-el}.  See
 @code{home-emacs-service-type} for more information."))
 
-(define (home-emacs-extensions original-config extension-configs)
-  (home-emacs-configuration
-   (inherit original-config)
-   (elisp-packages
-    (append (home-emacs-configuration-elisp-packages original-config)
-	    (append-map
-	     home-emacs-extension-elisp-packages extension-configs)))
-   (init-el
-    (append (home-emacs-configuration-init-el original-config)
-	    (append-map
-	     home-emacs-extension-init-el extension-configs)))
-   (early-init-el
-    (append (home-emacs-configuration-early-init-el original-config)
-	    (append-map
-	     home-emacs-extension-early-init-el extension-configs)))))
+(define (home-emacs-extensions original-config extensions)
+  (let ((extensions (reverse extensions)))
+    (home-emacs-configuration
+     (inherit original-config)
+     (elisp-packages
+      (append (home-emacs-configuration-elisp-packages original-config)
+	      (append-map
+	       home-emacs-extension-elisp-packages extensions)))
+     (init-el
+      (append (home-emacs-configuration-init-el original-config)
+	      (append-map
+	       home-emacs-extension-init-el extensions)))
+     (early-init-el
+      (append (home-emacs-configuration-early-init-el original-config)
+	      (append-map
+	       home-emacs-extension-early-init-el extensions))))))
 
 
 (define home-emacs-service-type
@@ -309,10 +310,10 @@ extensible, self-documenting editor.")))
 	  #:key
           summary authors maintainers url keywords commentary
 	  (elisp-packages '())
-	  (autoloads? #t))
-  "Takes a list of Elisp expressions, create emacs-NAME package.
-@code{#~\";;;###autoload\"} can be used to make next expression be
-loaded on startup."
+	  (autoloads? #f))
+  "Takes a list of Elisp expressions, creates emacs-NAME package.
+When autoloads? is @code{#t} adds @code{#~\";;;###autoload\"} before each
+Elisp expression to make it evaluated on Emacs startup."
 
   (define (package->package-input pkg)
     (list ((@ (guix packages) package-name) pkg) pkg))
