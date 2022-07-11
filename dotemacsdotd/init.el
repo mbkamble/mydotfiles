@@ -32,6 +32,7 @@
    )
   :config
   (fset 'yes-or-no-p 'y-or-n-p)
+  (setq indent-tabs-mode nil) ; use spaces instead of tabs
   (setq isearch-lazy-count t  ; Some very small tweaks for isearch
 	search-whitespace-regexp ".*?"
 	isearch-allow-scroll 'unlimited)

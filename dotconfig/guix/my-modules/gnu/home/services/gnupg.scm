@@ -83,7 +83,8 @@
 (define-enum pinentry-flavor
   '(tty emacs gtk2 qt gnome3 rofi efl bemenu))
 
-(define (serialize-pinentry-flavor field-name val)
+(define (serialize-pinentry-flavor field-name val) "")
+(define (serialize-pinentry-flavor-ignore  field-name val)
   (let ((pinentry-program
          #~(string-append "pinentry-program "
                           #$(file-append

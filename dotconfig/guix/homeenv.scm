@@ -7,6 +7,7 @@
 (use-modules
  (ice-9 format)
  (ice-9 getopt-long)
+ (ice-9 textual-ports)
  (gnu home)
  (gnu packages)
  (gnu services)
@@ -20,7 +21,7 @@
  (gnu home services emacs)
  (gnu home services gnupg)
  (gnu home services fontutils)
-;; (guix scripts build)
+ ;; (guix scripts build)
  (srfi srfi-1)
 ;; (srfi srfi-37)
  (emacs-packages))
@@ -49,6 +50,12 @@
 (define tmp-he
   (home-environment))
 
+(display (local-file-absolute-file-name  (local-file "../../dotgpg/gpg-agent.conf")))(newline)  ;; (local-file ...) returns <local-file> record
+(define mbk-gpg-agent-string (call-with-input-file (local-file-absolute-file-name (local-file "../../dotgpg/gpg-agent.conf"))(lambda (port) (get-string-all port)))) ;; providing full path works
+(define mbk-gpg-string (call-with-input-file (local-file-absolute-file-name (local-file "../../dotgpg/gpg.conf")) (lambda (port) (get-string-all port))))
+;(define mbk-gpg-agent-string (call-with-input-file "../../dotgpg/gpg-agent.conf" (lambda (port) (get-string-all port)))) ;; relative path name does not work. throws error : guix home: error: failed to load '/home/mbkamble/opensource/mydotfiles/dotconfig/guix/homeenv.scm': No such file or directory
+;; (display "mbk-gpg-agent-string=\n")(display mbk-gpg-agent-string)(newline)
+
 (define mbk-he
   (home-environment
    (packages
@@ -63,7 +70,6 @@
 	  "font-google-material-design-icons"
 	  "clang"   ;; for clang, clang++, clangd and other tools
 	  "node"    ;; Node.js
-	  "less"
 
 	  ;; following are provided by %base-pacakges
 	  ;; "less" "grep" "which"
@@ -79,148 +85,58 @@
      (delete home-shell-profile-service-type)))
    (services
     (list
-     (service home-shell-mbk-profile-service-type)
-     ;; (service
-;;            home-bash-service-type
-;;            (home-bash-configuration
-;;             (aliases
-;;              '(("ns" . "nmcli con show --active")))
-	    
-;; 	    ;; copies respective files from home dir to file <blah>-bashrc and <blah>-bash_profile in store
-;;             ;; (bashrc
-;;             ;;  (list (local-file "/home/mbkamble/.bashrc" "bashrc")))
-;;             ;; (bash-profile
-;; ;;              `(,(plain-file "my-bash-profile"
-;; ;; 			    "\n\
-;; ;; export GUIX_EXTRA_PROFILES=$HOME/.guix-extra-profiles
-;; ;; for i in $GUIX_EXTRA_PROFILES/*; do
-;; ;;   profile=$i/$(basename $i)
-;; ;;   if [ -f $profile/etc/profile ]; then
-;; ;;     GUIX_PROFILE=$profile
-;; ;;     . $GUIX_PROFILE/etc/profile
-;; ;;   fi
-;; ;;   unset profile
-;; ;; done\n")))
-;; 	    ))
-	  (service
-	   home-gnupg-service-type
-	   (home-gnupg-configuration
-	    (gpg-config
-	     (home-gpg-configuration
-	      (extra-config
-	       '((default-key . "9F711C92")
-		 (cipher-algo . "AES256")
-		 (expert? . #t)
-		 (with-fingerprint? . #t)
-		 (list-options . "show-keyring")
-		 (with-keygrip? . #t)
-		 (keyid-format . "0xlong")
-		 (utf8-strings? . #t)
-		 (keyserver . "hkp://keys.gnupg.net")
-		 ))))
-	    (gpg-agent-config
-	     (home-gpg-agent-configuration
-	      (ssh-agent? #t)
-	      (ssh-keys
-	       '(("6A9063863762271CCD05409B60FA08E46730BDA4")
-		 ("CA067DC323D613B859EC0DD8049BA9A2E68B84A6")))
-	      (pinentry-flavor 'rofi)
-	      (extra-config
-	       `((max-cache-ttl . 214748364)
-		 (default-cache-ttl . 214748364)
-		 (max-cache-ttl-ssh . 214748364)
-		 (default-cache-ttl-ssh . 214748364)
-		 (allow-loopback-pinentry? . #t)
-		 (allow-emacs-pinentry? . #t)
-		 (log-file . ,(string-append (getenv "HOME") "/tmp/gpg-agent.log"))
-		 (debug-level . 2)
-		 ;; (debug . 1024)   ; debug and debug-pinentry are useful to debug agent-to-pinentry messages
-		 ;; (debug-pinentry? . #t)
-		 )))
-	     ))) ;; should complete service instance of home-gnupg-service-type
-	  (service
-           home-fish-service-type
-           (home-fish-configuration
-            (abbreviations
-             '(("llt" . "exa -lah -snew")
-	       ;; ("pphtml" . "html2text -style pretty -width 350 -ascii") ;; alternative to links
-	       ("pphtml" . "links -dump") ;; pretty-print to text format
-	       ;; ("asciidoctor" . "source ~/.rvm/scripts/rvm; and asciidoctor")
-	       ("sscan" . "simple-scan") ;; we might have to XDG_CURRENT_DESKTOP=XFCE simple-scan if Ctrl-1 etc keyboard shortcuts dont work
-	       ("allinstalledpkgs" . "ls -1d /run/current-system/profile  $GUIX_EXTRA_PROFILES/*/* ~/.guix-home/profile ~/.config/guix/current|grep -Pv 'link|lock'|xargs -izzz guix package -p zzz -I . ")	 
-	       ("catpdf" . "pdftotext -fixed 3 -enc ASCII7")))
-	    ;; there is a bug in guix distribution gnu/home/services/shells.scm in which env variables are being created using "set VAR VALUE" instead of "set -x VAR VALUE". So we had to move some var settings from "environment-variables" to "config"
-            (environment-variables
-	     '(
-               ;; ("SSH_AUTH_SOCK" . "$XDG_RUNTIME_DIR/gnupg/S.gpg-agent.ssh") ; resetting this because even though it is setup correctly in setup-environment, it seems to get reset to $XDG_RUNTIME_DIR/keyring/ssh
-	       ;; ("GUIX_EXTRA_PROFILES" . "$HOME/.guix-extra-profiles")
-	       ;; ("GUILE_WARN_DEPRECATED" . "detailed")
-	       ;; ("GUILE_AUTO_COMPILE" . "0")
-	       ;; ("NPM_CONFIG_USERCONFIG" . "$XDG_CONFIG_HOME/npm/npmrc")
-	       ;; https://github.com/sindresorhus/guides/blob/main/npm-global-without-sudo.md
-               ;; npm config set prefix "${HOME}/.npm-packages"
-               ;; ("NPM_PACKAGES" . "$HOME/.npm-packages")
-               ("PATH" . "$PATH $NPM_PACKAGES/bin")
-               ("MANPATH" . "$NPM_PACKAGES/share/man $MANPATH")
-	       ))
-            (aliases
-             '(("rmi" . "rm -i")))
-	    ;; text-config is List of file-like objects (see Info->Guix->G-expr), which will be added to config.fish
-	    (config
-	     ;; see older versions of this file for an example using `plain-file'
-	     `(,(mixed-text-file "my-mixed-custom.fish"
-				 #~(string-append "\
-;; # activate all the profiles created in $GUIX_EXTRA_PROFILES
-;; status --is-login; and not set -q __fish_guix_extra_profiles_sourced
-;; and begin
-;;   set -xg GUIX_EXTRA_PROFILES $HOME/.guix-extra-profiles
-;;   set --prepend fish_function_path " #$fish-foreign-env "/share/fish/functions
-;;   for i in $GUIX_EXTRA_PROFILES/*
-;;     set -xg GUIX_PROFILE $i/(basename $i)
-;;     #echo GUIX_PROFILE=$GUIX_PROFILE
-;;     fenv source $GUIX_PROFILE/etc/profile
-;;     set -eg GUIX_PROFILE
-;;   end
-;;   #set -S PATH
-;;   set -e fish_function_path[1]
-;;   set -g __fish_guix_extra_profiles_sourced 1
-;; end
-set -xg NPM_CONFIG_USERCONFIG $XDG_CONFIG_HOME/npm/npmrc
-set -xg SSH_AUTH_SOCK $XDG_RUNTIME_DIR/gnupg/S.gpg-agent.ssh
-set -xg GUILE_WARN_DEPRECATED detailed
-set -xg GUILE_AUTO_COMPILE 0
-set -xg NPM_PACKAGES $HOME/.npm-packages\n")))  ;; 
-	     )))
-	  ;; endservice home-fish-service-type
-
-	  ;; this creates a files blah-utils.el in the store (/gnu/store) and makes a soft link to it
-	  ;; in ~/.emacs.d/lisp as well as ~/.guix-home/files/.emacs.d/lisp
-	  (simple-service 'my-elisp
-			  home-files-service-type
-			  `((".emacs.d/lisp/utils.el"
-			     ,(local-file "../../dotemacsdotd/lisp/utils.el"))
-			    (".config/npm/npmrc"
-			     ,(local-file "../npm/npmrc"))
-			    ;; (".profile" ,(local-file "../homedotprofile")) ;; does not work. throws an exception: duplicate entry for files -- .profile
-			    ))
-	  (simple-service 'some-useful-env-vars-service
-			  home-environment-variables-service-type
-			  '(("MBK_FOR_SHEPHERD" . "this_works:visible")))
-	  (service
-	   home-emacs-service-type
-	   (home-emacs-configuration
-	    (package emacs)
-	    (rebuild-elisp-packages? #t)
-	    (elisp-packages
-	     (map specification->package my-emacs-packages))
-	    (xdg-flavor? #f)
-	    (server-mode?  #t)
-	    ;; the following create symlinks in $HOME/.emacs.d and in $HOME/.guix-home/files/.emacs.d
-	    (init-el `(,(slurp-file-gexp (local-file "../../dotemacsdotd/init.el"))))
-	    (early-init-el `(,(slurp-file-gexp (local-file "../../dotemacsdotd/early-init.el"))))
-	    ))            ;; endservice home-emacs-service-type
-
-	  ))))
+     (simple-service 'all-my-init-files
+		     ;; setup init files for all tools and apps
+		     home-files-service-type
+		     `(
+		       (".profile"                         ,(local-file "../../dotprofile"))
+		       (".guile"                            ,(local-file "../../dotguile"))
+		       (".gitconfig"                     ,(local-file "../../dotgitconfig"))
+		       (".hgrc"                           ,(local-file "../../dothgrc"))
+		       (".tmux.conf"                   ,(local-file "../../dottmux.conf"))
+		       (".config/fish/config.fish" ,(local-file "../fish/config.fish"))
+                       ;; a(".config/fish/conf.d/abbrev.fish" ,(local-file "../fish/conf.d/mbkabbrev.fish"))
+		       (".emacs.d/lisp/utils.el"    ,(local-file "../../dotemacsdotd/lisp/utils.el"))
+		       (".config/npm/npmrc"      ,(local-file "../npm/npmrc"))
+                       (".emacs.d/init.el"             ,(local-file "../../dotemacsdotd/init.el"))
+                       (".emacs.d/early-init.el"             ,(local-file "../../dotemacsdotd/early-init.el"))
+                       ;; (".gnupg/gpg-agent.conf" ,(local-file "../../dotgpg/gpg-agent.conf"))
+                       ;; (".gnupg/gpg.conf"            ,(local-file "../../dotgpg/gpg.conf"))
+		       ))
+     (simple-service 'some-useful-env-vars
+		     home-environment-variables-service-type
+		     '(("MBK_FOR_SHEPHERD" . "this_works:visible")
+		       ("GUILE_WARN_DEPRECATED" . "detailed")
+                       ("SSH_AUTH_SOCK" . "$XDG_RUNTIME_DIR/gnupg/S.gpg-agent.ssh") ; resetting this because even though it is setup correctly in setup-environment, it seems to get reset to $XDG_RUNTIME_DIR/keyring/ssh
+		       ("GUIX_EXTRA_PROFILES" . "$HOME/.guix-extra-profiles")
+                       ;; https://github.com/sindresorhus/guides/blob/main/npm-global-without-sudo.md
+                       ("NPM_CONFIG_USERCONFIG" . "$XDG_CONFIG_HOME/npm/npmrc") ;;  sets prefix
+		       ("NPM_PACKAGES" . "$HOME/.npm-packages")
+		       ("PATH" . "$PATH:$NPM_PACKAGES/bin")
+		       ("MANPATH" . "$NPM_PACKAGES/share/man:$MANPATH")))
+     ;; (service home-shell-mbk-profile-service-type)
+     
+     (service
+      home-gnupg-service-type
+      (home-gnupg-configuration
+       (gpg-config
+        (home-gpg-configuration
+         (extra-content  mbk-gpg-string)
+         ))
+       (gpg-agent-config
+        (home-gpg-agent-configuration
+         (extra-content mbk-gpg-agent-string)
+         ))))
+     (service
+      home-emacs-service-type
+      (home-emacs-configuration
+       (package emacs)
+       (rebuild-elisp-packages? #t)
+       (elisp-packages
+	(map specification->package my-emacs-packages))
+       (xdg-flavor? #f)
+       (server-mode?  #t)))
+     ))))
 
 
 mbk-he ;; return the home-environment
