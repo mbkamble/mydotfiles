@@ -102,6 +102,7 @@
                        (".emacs.d/early-init.el"             ,(local-file "../../dotemacsdotd/early-init.el"))
                        ;; (".gnupg/gpg-agent.conf" ,(local-file "../../dotgpg/gpg-agent.conf"))
                        ;; (".gnupg/gpg.conf"            ,(local-file "../../dotgpg/gpg.conf"))
+                       (".gnupg/sshcontrol" ,(local-file "../../dotgpg/sshcontrol"))
 		       ))
      (simple-service 'some-useful-env-vars
 		     home-environment-variables-service-type
@@ -121,11 +122,11 @@
       (home-gnupg-configuration
        (gpg-config
         (home-gpg-configuration
-         (extra-content  mbk-gpg-string)
+         (extra-content (slurp-file-gexp (local-file "../../dotgpg/gpg.conf")))
          ))
        (gpg-agent-config
         (home-gpg-agent-configuration
-         (extra-content mbk-gpg-agent-string)
+         (extra-content (slurp-file-gexp (local-file "../../dotgpg/gpg-agent.conf")))         
          ))))
      (service
       home-emacs-service-type
